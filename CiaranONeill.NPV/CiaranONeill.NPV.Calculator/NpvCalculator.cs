@@ -5,15 +5,13 @@ namespace CiaranONeill.NPV.Calculator
 {
     public class NpvCalculator
     {
-        
         public double CalculatePresentValue(double cashflow, double rate, int period = 1, int rollsPerPeriod = 1)
         {
-            if (rate <= 0)
-                throw new ArgumentException("Rate cannot be <= 0");
-            if (rate > 100)
-                throw new ArgumentException("Rate cannot be > 100");
+            Guard.IsInRange(rate, "rate", 0, 100);
+            Guard.GreaterThan(period, "period", 0);
+            Guard.GreaterThan(rollsPerPeriod, "rollsPerPeriod", 0);            
 
-            var pv = cashflow / Math.Pow(1 + rate, period);
+            var pv = cashflow / Math.Pow(1 + (rate / rollsPerPeriod), period);
 
             return pv;
         }

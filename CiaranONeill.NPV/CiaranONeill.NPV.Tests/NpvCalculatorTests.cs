@@ -33,5 +33,15 @@ namespace CiaranONeill.NPV.Tests
 
             Assert.Equal(22.53944, pv, 4);
         }
+
+
+        [Fact]
+        public void CalculatePresentValue_ForThirdYearWith4Rolls_ReturnsValue()
+        {
+            var sut = new NpvCalculator();
+            var pv = sut.CalculatePresentValue(30, 0.10d, 3, 4);
+
+            Assert.Equal(27.85798, pv, 4);
+        }
     }
 }
