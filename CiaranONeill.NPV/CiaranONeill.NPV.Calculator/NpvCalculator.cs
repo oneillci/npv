@@ -6,35 +6,56 @@ namespace CiaranONeill.NPV.Calculator
 {
     public class NpvCalculator
     {
-        public double CalculatePresentValue(double cashflow, double rate, int period = 1, int rollsPerPeriod = 1)
+        private Random rng = new Random();
+
+        public double CalculatePresentValue(double cashflow, double rate, int periodNumber = 1, RolloverType rolloverType = RolloverType.Annual)
         {
             Guard.IsInRange(rate, "rate", 0, 100);
-            Guard.GreaterThan(period, "period", 0);
-            Guard.GreaterThan(rollsPerPeriod, "rollsPerPeriod", 0);            
+            Guard.GreaterThan(periodNumber, "periodNumber", 0);         
 
-            var pv = cashflow / Math.Pow(1 + (rate / rollsPerPeriod), period);
+            var pv = cashflow / Math.Pow(1 + (rate / (int)rolloverType), periodNumber);
 
             return pv;
+        }
+
+        public IEnumerable<double> GetRandomData()
+        {
+            var result = new List<double>();
+
+            for (int i = 0; i < 3; i++)
+                result.Add(GetRandomDouble(true));
+
+            for (int i = 0; i < 9; i++)
+                result.Add(GetRandomDouble(false));
+
+            return result;
+        }
+
+        private double GetRandomDouble(bool generateNegativeValue)
+        {
+            double maxValue = generateNegativeValue ? -5000 : 30000;
+            double minValue = generateNegativeValue ? 0 : 500;
+
+            return rng.NextDouble() * (maxValue - minValue) + minValue;
         }
     }
 
     public class DateRollCalculator
     {
-        public IEnumerable<DateTime> GetDates(TimePeriod period)
+        public IEnumerable<DateTime> GetDates(RolloverType period)
         {
             var startDate = new DateTime(DateTime.Now.Year, 1, 1);
-            var endDate = new DateTime(DateTime.Now.Year + 10, 1, 1);
             switch(period)
             {
-                case TimePeriod.Annually:
+                case RolloverType.Annual:
                     //return Enumerable.Range(DateTime.Now.Year, 10).Select(x => new DateTime(x, 1, 1));
-                    return GetDates(endDate, 12);
-                case TimePeriod.Quarterly:
-                    return GetDates(endDate, 3);
-                case TimePeriod.Monthly:
-                    return GetDates(endDate, 1);
+                    return GetDates(new DateTime(DateTime.Now.Year + 12, 1, 1), 12); // 12 years
+                case RolloverType.Quarter:
+                    return GetDates(new DateTime(DateTime.Now.Year + 3, 1, 1), 3); // 12 quarters
+                case RolloverType.Month:
+                    return GetDates(new DateTime(DateTime.Now.Year + 1, 1, 1), 1); // 12 months
                 default:
-                    return GetDates(endDate, 12);
+                    return GetDates(new DateTime(DateTime.Now.Year + 12, 1, 1), 12);
             }
         }
 
@@ -49,11 +70,11 @@ namespace CiaranONeill.NPV.Calculator
             }
         }
     }
-
-    public enum TimePeriod
+    
+    public enum RolloverType
     {
-        Annually,
-        Quarterly,
-        Monthly
+        Annual = 1,
+        Quarter = 4,
+        Month = 12
     }
 }

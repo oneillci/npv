@@ -39,7 +39,7 @@ namespace CiaranONeill.NPV.Tests
         public void CalculatePresentValue_ForThirdYearWith4Rolls_ReturnsValue()
         {
             var sut = new NpvCalculator();
-            var pv = sut.CalculatePresentValue(30, 0.10d, 3, 4);
+            var pv = sut.CalculatePresentValue(30, 0.10d, 3, RolloverType.Quarter);
 
             Assert.Equal(27.85798, pv, 4);
         }

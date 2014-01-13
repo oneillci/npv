@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="CiaranONeill.NPV.Silverlight.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="857" Width="1070">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="CashflowInputTemplate">
+            <Grid Width="315">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{Binding Key}" HorizontalAlignment="Left" Margin="29,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                <TextBox Text="{Binding Value, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Margin="29,32,0,0" Width="107" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="59*"/>
+            <RowDefinition Height="58*"/>
+            <RowDefinition Height="54*"/>
+            <RowDefinition Height="54*"/>
+            <RowDefinition Height="490*"/>
+            <RowDefinition Height="142*"/>
+
+
+        </Grid.RowDefinitions>
+        <TextBox x:Name="txtLowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="35,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="1"/>
+        <TextBox x:Name="txtUpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="35,29,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="15"/>
+        <TextBox x:Name="txtIncrement" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="35,31,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0.25"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,32,0,0" TextWrapping="Wrap" Text="Lower Rate" VerticalAlignment="Top" Height="16" Width="62"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,29,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Upper Rate" VerticalAlignment="Top" Height="16" Width="62"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,31,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Width="62"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,27,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Current Rate" VerticalAlignment="Top" Height="16" Width="71"/>
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="35,27,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120" Height="20">
+            <ComboBoxItem Content="10" IsSelected="True"/>
+        </ComboBox>
+        <ItemsControl x:Name="lstCashflow" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" ItemTemplate="{StaticResource CashflowInputTemplate}" Grid.ColumnSpan="2" />
+        <TextBlock HorizontalAlignment="Left" Margin="35,37,0,0" Grid.Row="5" TextWrapping="Wrap" Text="NPV" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblNPV" Grid.Column="1" HorizontalAlignment="Left" Margin="24,37,0,0" Grid.Row="5" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+    </Grid>
+</UserControl>
