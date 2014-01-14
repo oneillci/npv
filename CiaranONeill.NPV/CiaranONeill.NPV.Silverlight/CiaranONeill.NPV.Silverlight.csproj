@@ -94,18 +94,21 @@
     <Compile Include="..\CiaranONeill.NPV.Calculator\Guard.cs">
       <Link>Guard.cs</Link>
     </Compile>
-    <Compile Include="..\CiaranONeill.NPV.Calculator\NpvCalculator.cs">
-      <Link>NpvCalculator.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="DateServiceProxy.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NpvServiceProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\NpvDateServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\NpvServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,30 +128,51 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
+    <None Include="Service References\NpvDateServiceReference\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvDateServiceReference\CiaranONeill.NPV.Calculator.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvDateServiceReference\service.wsdl" />
+    <None Include="Service References\NpvDateServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvDateServiceReference\service1.wsdl" />
+    <None Include="Service References\NpvDateServiceReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvServiceReference\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\NpvServiceReference\CiaranONeill.NPV.Silverlight.NpvServiceReference.Customer.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\NpvServiceReference\NpvService.wsdl" />
-    <None Include="Service References\NpvServiceReference\NpvService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NpvServiceReference\NpvService1.wsdl" />
-    <None Include="Service References\NpvServiceReference\NpvService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NpvServiceReference\NpvService2.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Service References\NpvDateServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\NpvDateServiceReference\configuration.svcinfo" />
+    <None Include="Service References\NpvDateServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\NpvServiceReference\CiaranONeill.NPV.Silverlight.Web.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvServiceReference\service.wsdl" />
+    <None Include="Service References\NpvServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvServiceReference\service1.wsdl" />
+    <None Include="Service References\NpvServiceReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\NpvDateServiceReference\" />
     <WCFMetadataStorage Include="Service References\NpvServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\NpvServiceReference\NpvService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\NpvServiceReference\configuration91.svcinfo" />

@@ -1,40 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using CiaranONeill.NPV.Calculator;
+using CiaranONeill.NPV.Silverlight.NpvDateServiceReference;
 using CiaranONeill.NPV.Silverlight.NpvServiceReference;
 
 namespace CiaranONeill.NPV.Silverlight
 {
     public partial class MainPage : UserControl
     {
-        private INpvService _npvService;
+        private readonly INpvService _npvService;
+        private readonly INpvDateService _dateService;
 
         public List<Data> Cashflows { get; set; }
 
-        public MainPage() : this(Bootstrapper.Resolve<INpvService>())
+        public MainPage() : this(Bootstrapper.Resolve<INpvService>(), Bootstrapper.Resolve<INpvDateService>())
         {
 
         }
 
-        public MainPage(INpvService npvService)
+        public MainPage(INpvService npvService, INpvDateService dateService)
         {
-            _npvService = npvService;
-
             InitializeComponent();
 
-            Cashflows = new List<Data>();
+            _dateService = dateService;
+            _npvService = npvService;
+            Cashflows = new List<Data>();   
+            LoadData();
+        }
 
-            var dates = new DateRollCalculator().GetDates(RolloverType.Month).ToList();
-            var data = new NpvCalculator().GetRandomData().ToList();
+        private async void LoadData()
+        {
+            var dates = await _dateService.GetDates(RolloverType.Month);
+            var data = await _npvService.GetRandomData();
 
+            var dates2 = dates.ToArray();
+            var data2 = data.ToArray();
             for (int i = 0; i < dates.Count(); i++)
             {
-                Cashflows.Add(new Data { Period = dates[i], Cashflow = data[i] });
+                Cashflows.Add(new Data { Period = dates2[i], Cashflow = data2[i] });
             }
 
             lstCashflow.ItemsSource = Cashflows;

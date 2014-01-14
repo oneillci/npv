@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
+using CiaranONeill.NPV.Calculator;
 
 namespace CiaranONeill.NPV.Silverlight.Web
 {
@@ -10,10 +11,27 @@ namespace CiaranONeill.NPV.Silverlight.Web
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class NpvService
     {
+        private readonly INpvCalculator _npvCalculator;
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="calculator"></param>
+        public NpvService(INpvCalculator calculator)
+        {
+            _npvCalculator = calculator;
+        }
+
         [OperationContract]
         public string DoWork()
         {
             return "Hello from WCF";
+        }
+
+        [OperationContract]
+        public IEnumerable<double> GetRandomData()
+        {
+            return _npvCalculator.GetRandomData();
         }
 
         [OperationContract]

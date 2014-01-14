@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateRollCalculator.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="NpvCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

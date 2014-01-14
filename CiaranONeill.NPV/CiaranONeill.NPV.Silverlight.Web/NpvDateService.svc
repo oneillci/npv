@@ -1,4 +1,4 @@
 ﻿<%@ ServiceHost Language="C#" Debug="true" 
-    Service="CiaranONeill.NPV.Silverlight.Web.NpvService, CiaranONeill.NPV.Silverlight.Web" 
+    Service="CiaranONeill.NPV.Silverlight.Web.NpvDateService, CiaranONeill.NPV.Silverlight.Web" 
     Factory="Autofac.Integration.Wcf.AutofacWebServiceHostFactory, Autofac.Integration.Wcf"
-    CodeBehind="NpvService.svc.cs" %>
+    CodeBehind="NpvDateService.svc.cs" %>

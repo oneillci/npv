@@ -10,7 +10,8 @@ namespace CiaranONeill.NPV.Silverlight
         public static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType(typeof(NpvServiceProxy)).As<INpvService>();
+            builder.RegisterAssemblyTypes(typeof(INpvService).Assembly).AsImplementedInterfaces();
+            //builder.RegisterType(typeof(NpvServiceProxy)).As<INpvService>();
             //builder.RegisterGeneric(typeof(ICommandHandler<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
             _container = builder.Build();
 

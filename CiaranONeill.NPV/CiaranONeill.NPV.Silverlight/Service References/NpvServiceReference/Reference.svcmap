@@ -20,15 +20,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:57934/NpvService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:57934/NpvService.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="NpvService.wsdl" MetadataType="Wsdl" ID="4e64e97a-5604-4bc0-9106-3d45cbd61b8d" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?wsdl=wsdl0" />
-    <MetadataFile FileName="NpvService.xsd" MetadataType="Schema" ID="d139fd0d-5210-4ee1-9e5f-2a961f2d3ad7" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?xsd=xsd2" />
-    <MetadataFile FileName="NpvService1.xsd" MetadataType="Schema" ID="07f71500-0709-42dd-bdf1-fbc689803db7" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?xsd=xsd1" />
-    <MetadataFile FileName="NpvService1.wsdl" MetadataType="Wsdl" ID="84e71bda-e866-4749-8893-ae0d02d0939a" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?wsdl" />
-    <MetadataFile FileName="NpvService2.xsd" MetadataType="Schema" ID="7fa66742-f182-4c79-a99e-e0e9949f2203" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?xsd=xsd0" />
-    <MetadataFile FileName="NpvService.disco" MetadataType="Disco" ID="07c1cc65-cfc7-46ec-8027-c92742e099ee" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?disco" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="69be49b0-28b8-445a-995c-8de8c540424f" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="c5140ea1-956d-436a-b3f9-668e08a21b1f" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="df396190-7399-465a-949b-6a433bab3816" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="71e2ce6f-dfe4-4a8c-b100-545e8597c7e1" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="98f2c9aa-3d40-4f7a-81d9-850539bc8cc7" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex" />
+    <MetadataFile FileName="CiaranONeill.NPV.Silverlight.Web.xsd" MetadataType="Schema" ID="3fb4b5dc-fd33-48c7-a124-ddd84aa23e36" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
