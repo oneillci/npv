@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4c23d276-58cb-48d3-8135-62042e5d676c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:57934/NpvService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="NpvService.wsdl" MetadataType="Wsdl" ID="4e64e97a-5604-4bc0-9106-3d45cbd61b8d" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="NpvService.xsd" MetadataType="Schema" ID="d139fd0d-5210-4ee1-9e5f-2a961f2d3ad7" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?xsd=xsd2" />
+    <MetadataFile FileName="NpvService1.xsd" MetadataType="Schema" ID="07f71500-0709-42dd-bdf1-fbc689803db7" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?xsd=xsd1" />
+    <MetadataFile FileName="NpvService1.wsdl" MetadataType="Wsdl" ID="84e71bda-e866-4749-8893-ae0d02d0939a" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?wsdl" />
+    <MetadataFile FileName="NpvService2.xsd" MetadataType="Schema" ID="7fa66742-f182-4c79-a99e-e0e9949f2203" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?xsd=xsd0" />
+    <MetadataFile FileName="NpvService.disco" MetadataType="Disco" ID="07c1cc65-cfc7-46ec-8027-c92742e099ee" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

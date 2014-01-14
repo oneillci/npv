@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiaranONeill.NPV.Tests", "CiaranONeill.NPV.Tests\CiaranONeill.NPV.Tests.csproj", "{A7269E13-D941-436E-A009-F817649A3A42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiaranONeill.NPV.Silverlight", "CiaranONeill.NPV.Silverlight\CiaranONeill.NPV.Silverlight.csproj", "{7A3C974A-4FDA-4485-9505-4B7440B0694C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{34BFE4FB-0723-473C-BC2D-0D374608A39C} = {34BFE4FB-0723-473C-BC2D-0D374608A39C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiaranONeill.NPV.Silverlight.Web", "CiaranONeill.NPV.Silverlight.Web\CiaranONeill.NPV.Silverlight.Web.csproj", "{34BFE4FB-0723-473C-BC2D-0D374608A39C}"
 EndProject
