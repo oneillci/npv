@@ -12,10 +12,19 @@ namespace CiaranONeill.NPV.Silverlight
 {
     public partial class MainPage : UserControl
     {
+        private INpvService _npvService;
+
         public List<Data> Cashflows { get; set; }
 
-        public MainPage()
+        public MainPage() : this(Bootstrapper.Resolve<INpvService>())
         {
+
+        }
+
+        public MainPage(INpvService npvService)
+        {
+            _npvService = npvService;
+
             InitializeComponent();
 
             Cashflows = new List<Data>();
@@ -31,57 +40,11 @@ namespace CiaranONeill.NPV.Silverlight
             lstCashflow.ItemsSource = Cashflows;
         }
 
-
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show(await NpvServiceProxy.GetHello());
-            var customers = await NpvServiceProxy.GetCustomers(new Customer());
+            MessageBox.Show(await _npvService.GetHello());
+            var customers = await _npvService.GetCustomers(new Customer());
             MessageBox.Show(customers.First().Name);
-        }
-    }
-
-    public class NpvServiceProxy
-    {
-        public static Task<string> GetHello()
-        {
-            var tcs = new TaskCompletionSource<string>();
-
-            var client = new NpvServiceClient();
-
-            client.DoWorkCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                    tcs.TrySetException(e.Error);
-                else if (e.Cancelled)
-                    tcs.TrySetCanceled();
-                else
-                    tcs.TrySetResult(e.Result);
-            };
-
-            client.DoWorkAsync();
-
-            return tcs.Task;
-        }
-
-        public static Task<ObservableCollection<Customer>> GetCustomers(Customer customer)
-        {
-            var tcs = new TaskCompletionSource<ObservableCollection<Customer>>();
-
-            var client = new NpvServiceClient();
-
-            client.GetCustomersCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                    tcs.TrySetException(e.Error);
-                else if (e.Cancelled)
-                    tcs.TrySetCanceled();
-                else
-                    tcs.TrySetResult(e.Result);
-            };
-
-            client.GetCustomersAsync(customer);
-
-            return tcs.Task;
         }
     }
 

@@ -21,6 +21,8 @@ namespace CiaranONeill.NPV.Silverlight
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
 
+            Bootstrapper.Configure();
+
             InitializeComponent();
         }
 
