@@ -31,6 +31,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <LinkedServerProject>
     </LinkedServerProject>
+    <ExpressionBlendVersion>12.0.41002.1</ExpressionBlendVersion>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -62,6 +63,10 @@
   <ItemGroup>
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\Microsoft.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
@@ -97,6 +102,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviours\TextBoxFilterService.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DateServiceProxy.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -155,6 +161,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="arrow_rotate_clockwise.png" />
+    <Resource Include="Images\loading_small_blue .jpg" />
+    <Resource Include="Images\arrow_rotate_clockwise.png" />
     <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\NpvServiceReference\CiaranONeill.NPV.Silverlight.Web.xsd">
       <SubType>Designer</SubType>
@@ -167,13 +176,7 @@
     <None Include="Service References\NpvServiceReference\service1.xsd">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\NpvDateServiceReference\" />
-    <WCFMetadataStorage Include="Service References\NpvServiceReference\" />
+    <Resource Include="loading_small_blue.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\NpvServiceReference\configuration91.svcinfo" />

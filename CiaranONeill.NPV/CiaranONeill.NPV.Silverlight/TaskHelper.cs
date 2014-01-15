@@ -58,18 +58,20 @@ namespace CiaranONeill.NPV.Silverlight
             Action<object, EventArgs> completedAction = (s, e) =>
             {
                 // Get properties via reflection
-                var properties = e.GetType().GetProperties();
-                var error = properties.First(x => x.Name == "Error").GetValue(e, null) as Exception;
-                var cancelled = (bool)properties.First(x => x.Name == "Cancelled").GetValue(e, null);
-                var result = properties.First(x => x.Name == "Result").GetValue(e, null);
+                //var properties = e.GetType().GetProperties();
+                //var error = properties.First(x => x.Name == "Error").GetValue(e, null) as Exception;
+                //var cancelled = (bool)properties.First(x => x.Name == "Cancelled").GetValue(e, null);
+                //var result = properties.First(x => x.Name == "Result").GetValue(e, null);
+                
+                dynamic d = (dynamic)e;
 
                 // Standard TCS now...
-                if (error != null)
-                    tcs.TrySetException(error);
-                else if (cancelled)
+                if (d.Error != null)
+                    tcs.TrySetException(d.Error);
+                else if (d.Cancelled)
                     tcs.TrySetCanceled();
                 else
-                    tcs.TrySetResult((TResult)result);
+                    tcs.TrySetResult((TResult)d.Result);
             };
             // http://stackoverflow.com/questions/3772005/how-to-dynamically-subscribe-to-an-event
             var exp = Expression.Call(Expression.Constant(completedAction), completedAction.GetType().GetMethod("Invoke"), eventParams);

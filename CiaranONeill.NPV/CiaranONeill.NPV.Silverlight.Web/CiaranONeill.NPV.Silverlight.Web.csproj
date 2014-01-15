@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="CiaranONeill.NPV.SilverlightTestPage.aspx" />
     <Content Include="CiaranONeill.NPV.SilverlightTestPage.html" />
+    <Content Include="clientaccesspolicy.xml" />
     <Content Include="ClientBin\CiaranONeill.NPV.Silverlight.xap" />
     <Content Include="Global.asax" />
     <Content Include="NpvDateService.svc" />

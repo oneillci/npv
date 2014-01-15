@@ -27,12 +27,12 @@ namespace CiaranONeill.NPV.Silverlight
 
             _dateService = dateService;
             _npvService = npvService;
-            Cashflows = new List<NpvData>();   
             LoadData();
         }
 
         private async void LoadData()
         {
+            Cashflows = new List<NpvData>();   
             var dates = await _dateService.GetDates(RolloverType.Month);
             var data = await _npvService.GetRandomData();
 
@@ -45,16 +45,23 @@ namespace CiaranONeill.NPV.Silverlight
         }
 
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
+        { 
             MessageBox.Show(await _npvService.DoWork());
             var customers = await _npvService.GetCustomers(new Customer());
+            var c = customers.First();
+            ((dynamic)c).Age = 32;
             MessageBox.Show(customers.First().Name);
+        }
+
+        private void LoadSampleData_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	LoadData();
         }
     }
 
     public class NpvData
     {
-        public DateTime Period { get; set; }
+        public DateTime? Period { get; set; }
         public double Cashflow { get; set; }
     }
 }
