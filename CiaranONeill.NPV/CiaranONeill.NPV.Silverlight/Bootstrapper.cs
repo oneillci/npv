@@ -11,17 +11,11 @@ namespace CiaranONeill.NPV.Silverlight
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(typeof(INpvService).Assembly).AsImplementedInterfaces();
-            //builder.RegisterType(typeof(NpvServiceProxy)).As<INpvService>();
             //builder.RegisterGeneric(typeof(ICommandHandler<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
             _container = builder.Build();
 
             return _container;
         }
-
-        //public static object Resolve(Type serviceType)
-        //{
-        //    return _container.Resolve(serviceType);
-        //}
 
         public static T Resolve<T>()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CiaranONeill.NPV.Silverlight.NpvDateServiceReference;
 
@@ -7,9 +8,9 @@ namespace CiaranONeill.NPV.Silverlight
 {
     public class DateServiceProxy : INpvDateService
     {
-        public Task<IEnumerable<DateTime>> GetDates(RolloverType period)
+        public Task<ObservableCollection<DateTime>> GetDates(RolloverType period)
         {
-            var tcs = new TaskCompletionSource<IEnumerable<DateTime>>();
+            var tcs = new TaskCompletionSource<ObservableCollection<DateTime>>();
 
             var client = new NpvDateServiceClient();
 
@@ -31,6 +32,6 @@ namespace CiaranONeill.NPV.Silverlight
 
     public interface INpvDateService
     {
-        Task<IEnumerable<DateTime>> GetDates(RolloverType period);
+        Task<ObservableCollection<DateTime>> GetDates(RolloverType period);
     }
 }

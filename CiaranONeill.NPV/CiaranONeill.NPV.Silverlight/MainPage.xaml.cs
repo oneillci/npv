@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using CiaranONeill.NPV.Silverlight.NpvDateServiceReference;
@@ -13,7 +14,7 @@ namespace CiaranONeill.NPV.Silverlight
         private readonly INpvService _npvService;
         private readonly INpvDateService _dateService;
 
-        public List<Data> Cashflows { get; set; }
+        public List<NpvData> Cashflows { get; set; }
 
         public MainPage() : this(Bootstrapper.Resolve<INpvService>(), Bootstrapper.Resolve<INpvDateService>())
         {
@@ -26,7 +27,7 @@ namespace CiaranONeill.NPV.Silverlight
 
             _dateService = dateService;
             _npvService = npvService;
-            Cashflows = new List<Data>();   
+            Cashflows = new List<NpvData>();   
             LoadData();
         }
 
@@ -35,11 +36,9 @@ namespace CiaranONeill.NPV.Silverlight
             var dates = await _dateService.GetDates(RolloverType.Month);
             var data = await _npvService.GetRandomData();
 
-            var dates2 = dates.ToArray();
-            var data2 = data.ToArray();
             for (int i = 0; i < dates.Count(); i++)
             {
-                Cashflows.Add(new Data { Period = dates2[i], Cashflow = data2[i] });
+                Cashflows.Add(new NpvData { Period = dates[i], Cashflow = data[i] });
             }
 
             lstCashflow.ItemsSource = Cashflows;
@@ -53,7 +52,7 @@ namespace CiaranONeill.NPV.Silverlight
         }
     }
 
-    public class Data
+    public class NpvData
     {
         public DateTime Period { get; set; }
         public double Cashflow { get; set; }

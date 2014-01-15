@@ -1,10 +1,21 @@
-using System.Collections.Generic;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CiaranONeill.NPV.Silverlight.NpvServiceReference;
 
 namespace CiaranONeill.NPV.Silverlight
 {
+    public interface INpvService
+    {
+        Task<string> GetHello();
+        Task<ObservableCollection<Customer>> GetCustomers(Customer customer);
+        Task<ObservableCollection<double>> GetRandomData();
+    }
+
     public class NpvServiceProxy : INpvService
     {
         public Task<string> GetHello()
@@ -49,9 +60,13 @@ namespace CiaranONeill.NPV.Silverlight
             return tcs.Task;
         }
 
-        public Task<IEnumerable<double>> GetRandomData()
+
+        public Task<ObservableCollection<double>> GetRandomData()
         {
-            var tcs = new TaskCompletionSource<IEnumerable<double>>();
+            var th = new TaskHelper<NpvServiceClient, ObservableCollection<double>>(new NpvServiceClient());
+            return th.GetTask<ObservableCollection<double>>(null);
+
+            var tcs = new TaskCompletionSource<ObservableCollection<double>>();
 
             var client = new NpvServiceClient();
 
@@ -71,10 +86,4 @@ namespace CiaranONeill.NPV.Silverlight
         }
     }
 
-    public interface INpvService
-    {
-        Task<string> GetHello();
-        Task<ObservableCollection<Customer>> GetCustomers(Customer customer);
-        Task<IEnumerable<double>> GetRandomData();
-    }
 }
