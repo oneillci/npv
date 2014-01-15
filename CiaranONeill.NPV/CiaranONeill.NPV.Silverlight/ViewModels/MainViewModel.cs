@@ -21,7 +21,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         public double LowerRate { get; set; }
         public double UpperRate { get; set; }
         public double Increment { get; set; }
-
+        public double SelectedRate { get; set; }
+        public ObservableCollection<double> Rates { get; set; }
 
         /// <summary>
         /// Ctor
@@ -35,17 +36,40 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
 
             LowerRate = 1;
             UpperRate = 15;
-            Increment = 0.25;
+            Increment = 4.0;
 
             LoadSampleData();
+
+            Rates = new ObservableCollection<double>() { 1, 5, 9, 13 };
         }
 
-        public async void Button()
+        //public async void Button()
+        //{
+        //    MessageBox.Show(await _npvService.DoWork());
+        //    var customers = await _npvService.GetCustomers(new Customer());
+        //    var c = customers.First();
+        //    MessageBox.Show(customers.First().Name);
+        //}
+
+        public async void CalculateNpv()
         {
-            MessageBox.Show(await _npvService.DoWork());
-            var customers = await _npvService.GetCustomers(new Customer());
-            var c = customers.First();
-            MessageBox.Show(customers.First().Name);
+            var results = Validate();
+            if (results.Any())
+            {
+                var message = string.Join(Environment.NewLine, results.Select(x => x));
+                MessageBox.Show(message);
+            }
+        }
+
+        private IEnumerable<string> Validate()
+        {
+            if (LowerRate > UpperRate)
+                yield return "Lower rate must be less than upper rate";
+            if (Increment > UpperRate)
+                yield return "Increment must be less than lower rate";
+            if (SelectedRate <= 0)
+                yield return "You must choose a Selected Rate";
+            
         }
 
         public async void LoadSampleData()
