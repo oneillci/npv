@@ -19,7 +19,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="{Binding Period, TargetNullValue=Date not supplied, StringFormat=\{0:d\}}" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,0,0,0"/>
-                <TextBox Text="{Binding Cashflow, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Width="107" behaviours:TextBoxFilterService.Filter="PositiveDecimal"/>
+                <TextBox Text="{Binding Cashflow, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Width="107" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="4"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -42,9 +42,9 @@
             <RowDefinition Height="Auto"/>
 
         </Grid.RowDefinitions>
-        <TextBox x:Name="LowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" Margin="0,15,0,0" />
-        <TextBox x:Name="UpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal"/>
-        <TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal"/>
+        <TextBox x:Name="LowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0,15,0,0" />
+        <TextBox x:Name="UpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
+        <TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Lower Rate" VerticalAlignment="Top" Height="16" Margin="10,15,0,0"/>
         <TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Upper Rate" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
         <TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />

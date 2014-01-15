@@ -13,6 +13,23 @@ namespace CiaranONeill.NPV.Silverlight.Behaviours
 {
     public class TextBoxFilterService
     {
+
+
+        public static int GetDecimalPlaces(DependencyObject obj)
+        {
+            return (int)obj.GetValue(DecimalPlacesProperty);
+        }
+
+        public static void SetDecimalPlaces(DependencyObject obj, int value)
+        {
+            obj.SetValue(DecimalPlacesProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for DecimalPlaces.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DecimalPlacesProperty =
+            DependencyProperty.RegisterAttached("DecimalPlaces", typeof(int), typeof(TextBoxFilterService), new PropertyMetadata(0));
+
+        
         /// <summary>
         /// Filter Attached Dependency Property
         /// </summary>
@@ -64,6 +81,7 @@ namespace CiaranONeill.NPV.Silverlight.Behaviours
             // bypass other keys!
             if (IsValidOtherKey(e.Key)) return;
 
+            int decimalPlaces = GetDecimalPlaces((DependencyObject)sender);
             TextBoxFilterType filterType = GetFilter((DependencyObject)sender);
             TextBox textBox = sender as TextBox;
             if (null == textBox)
@@ -80,10 +98,10 @@ namespace CiaranONeill.NPV.Silverlight.Behaviours
                     e.Handled = !IsValidIntegerKey(textBox, e.Key, e.PlatformKeyCode, true);
                     break;
                 case TextBoxFilterType.PositiveDecimal:
-                    e.Handled = !IsValidDecmialKey(textBox, e.Key, e.PlatformKeyCode, false);
+                    e.Handled = !IsValidDecmialKey(textBox, e.Key, e.PlatformKeyCode, false, decimalPlaces);
                     break;
                 case TextBoxFilterType.Decimal:
-                    e.Handled = !IsValidDecmialKey(textBox, e.Key, e.PlatformKeyCode, true);
+                    e.Handled = !IsValidDecmialKey(textBox, e.Key, e.PlatformKeyCode, true, decimalPlaces);
                     break;
                 case TextBoxFilterType.Alpha:
                     e.Handled = !IsValidAlphaKey(e.Key);
@@ -164,10 +182,14 @@ namespace CiaranONeill.NPV.Silverlight.Behaviours
         /// <returns>
         /// true if the specified key is valid decmial key for the specified text box; otherwise, false.
         /// </returns>
-        private static bool IsValidDecmialKey(TextBox textBox, Key key, int platformKeyCode, bool negativeAllowed)
+        private static bool IsValidDecmialKey(TextBox textBox, Key key, int platformKeyCode, bool negativeAllowed, int decimalPlaces)
         {
             if (IsValidIntegerKey(textBox, key, platformKeyCode, negativeAllowed))
             {
+                if (decimalPlaces > 0 && textBox.Text.Contains("."))
+                {
+                    return textBox.Text.Split('.')[1].Length < decimalPlaces;
+                }
                 return true;
             }
             if (key == Key.Decimal || (key == Key.Unknown && platformKeyCode == 190))
