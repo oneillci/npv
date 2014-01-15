@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using CiaranONeill.NPV.Silverlight.NpvDateServiceReference;
 using CiaranONeill.NPV.Silverlight.NpvServiceReference;
+using CiaranONeill.NPV.Silverlight.Proxies;
 
 namespace CiaranONeill.NPV.Silverlight
 {

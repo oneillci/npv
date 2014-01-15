@@ -10,15 +10,12 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace CiaranONeill.NPV.Silverlight
+namespace CiaranONeill.NPV.Silverlight.Views
 {
-    public partial class App : Application
+    public partial class MainView : UserControl
     {
-
-        public App()
-        {         
-            //Bootstrapper.Configure();
-
+        public MainView()
+        {
             InitializeComponent();
         }
     }
