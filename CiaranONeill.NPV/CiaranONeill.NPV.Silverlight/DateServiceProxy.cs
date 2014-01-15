@@ -10,23 +10,8 @@ namespace CiaranONeill.NPV.Silverlight
     {
         public Task<ObservableCollection<DateTime>> GetDates(RolloverType period)
         {
-            var tcs = new TaskCompletionSource<ObservableCollection<DateTime>>();
-
-            var client = new NpvDateServiceClient();
-
-            client.GetDatesCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                    tcs.TrySetException(e.Error);
-                else if (e.Cancelled)
-                    tcs.TrySetCanceled();
-                else
-                    tcs.TrySetResult(e.Result);
-            };
-
-            client.GetDatesAsync(period);
-
-            return tcs.Task;
+            var th = new TaskHelper<NpvDateServiceClient, ObservableCollection<DateTime>>(new NpvDateServiceClient());
+            return th.GetTask<ObservableCollection<DateTime>>(new object[]{period});
         }
     }
 

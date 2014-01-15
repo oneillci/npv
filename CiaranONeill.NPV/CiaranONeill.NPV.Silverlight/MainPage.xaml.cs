@@ -46,7 +46,7 @@ namespace CiaranONeill.NPV.Silverlight
 
         private async void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show(await _npvService.GetHello());
+            MessageBox.Show(await _npvService.DoWork());
             var customers = await _npvService.GetCustomers(new Customer());
             MessageBox.Show(customers.First().Name);
         }

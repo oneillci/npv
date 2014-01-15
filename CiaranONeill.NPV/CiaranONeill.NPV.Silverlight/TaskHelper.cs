@@ -41,19 +41,20 @@ namespace CiaranONeill.NPV.Silverlight
         /// <remarks>
         /// Not sure if doing this way is a good idea but lets try it out
         /// </remarks>
-        public Task<TResult> GetTask<TResult>(object parameter, [CallerMemberName]string methodName = null)
+        public Task<TResult> GetTask<TResult>(object[] parameters, [CallerMemberName]string methodName = null)
         {
             var tcs = new TaskCompletionSource<TResult>();
 
             var t = typeof(TServiceClient);
             //var method = t.GetMethod(methodName + "Async", new Type[]{});
             var methods = t.GetMethods();
-            var asyncMethod = methods.First(x => x.Name == methodName + "Async" && x.GetParameters().Count() == 0);
+            var length = parameters != null ? parameters.Length : 0;
+            var asyncMethod = methods.First(x => x.Name == methodName + "Async" && x.GetParameters().Count() == length);
 
             // Set up an event handler for the Completed event
             var completedEvent = t.GetEvent(methodName + "Completed");
 
-            var parameters = completedEvent.EventHandlerType.GetMethod("Invoke").GetParameters().Select(p => Expression.Parameter(p.ParameterType, "p")).ToArray();
+            var eventParams = completedEvent.EventHandlerType.GetMethod("Invoke").GetParameters().Select(p => Expression.Parameter(p.ParameterType, "p")).ToArray();
             Action<object, EventArgs> completedAction = (s, e) =>
             {
                 // Get properties via reflection
@@ -71,16 +72,15 @@ namespace CiaranONeill.NPV.Silverlight
                     tcs.TrySetResult((TResult)result);
             };
             // http://stackoverflow.com/questions/3772005/how-to-dynamically-subscribe-to-an-event
-            var exp = Expression.Call(Expression.Constant(completedAction), completedAction.GetType().GetMethod("Invoke"), parameters);
-            var l = Expression.Lambda(exp, parameters);
+            var exp = Expression.Call(Expression.Constant(completedAction), completedAction.GetType().GetMethod("Invoke"), eventParams);
+            var l = Expression.Lambda(exp, eventParams);
             var handler = Delegate.CreateDelegate(completedEvent.EventHandlerType, l.Compile(), "Invoke", false);
             completedEvent.AddEventHandler(_serviceClient, handler);
-
-            //var handler = Delegate.CreateDelegate(completedEvent.EventHandlerType, this, typeof(TaskHelper<TServiceClient, TResult>).GetMethod("AsyncCompletedHandler"));
+            //var handler = Delegate.CreateDelegate(completedEvent.EventHandlerType, this, typeof(TaskHelper<TResult>).GetMethod("AsyncCompletedHandler"));
             //completedEvent.AddEventHandler(_serviceClient, handler);
 
             // Invoke the Async method
-            asyncMethod.Invoke(_serviceClient, null);
+            asyncMethod.Invoke(_serviceClient, parameters);
 
             // Promoting TCS to a private field results in build error. Why? Store in object temporarily
             //o = tcs;

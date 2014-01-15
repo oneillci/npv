@@ -11,53 +11,23 @@ namespace CiaranONeill.NPV.Silverlight
 {
     public interface INpvService
     {
-        Task<string> GetHello();
+        Task<string> DoWork();
         Task<ObservableCollection<Customer>> GetCustomers(Customer customer);
         Task<ObservableCollection<double>> GetRandomData();
     }
 
     public class NpvServiceProxy : INpvService
     {
-        public Task<string> GetHello()
+        public Task<string> DoWork()
         {
-            var tcs = new TaskCompletionSource<string>();
-
-            var client = new NpvServiceClient();
-
-            client.DoWorkCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                    tcs.TrySetException(e.Error);
-                else if (e.Cancelled)
-                    tcs.TrySetCanceled();
-                else
-                    tcs.TrySetResult(e.Result);
-            };
-
-            client.DoWorkAsync();
-
-            return tcs.Task;
+            var th = new TaskHelper<NpvServiceClient, string>(new NpvServiceClient());
+            return th.GetTask<string>(null);
         }
 
         public Task<ObservableCollection<Customer>> GetCustomers(Customer customer)
         {
-            var tcs = new TaskCompletionSource<ObservableCollection<Customer>>();
-
-            var client = new NpvServiceClient();
-
-            client.GetCustomersCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                    tcs.TrySetException(e.Error);
-                else if (e.Cancelled)
-                    tcs.TrySetCanceled();
-                else
-                    tcs.TrySetResult(e.Result);
-            };
-
-            client.GetCustomersAsync(customer);
-
-            return tcs.Task;
+            var th = new TaskHelper<NpvServiceClient, ObservableCollection<Customer>>(new NpvServiceClient());
+            return th.GetTask<ObservableCollection<Customer>>(new object[] { customer });
         }
 
 
