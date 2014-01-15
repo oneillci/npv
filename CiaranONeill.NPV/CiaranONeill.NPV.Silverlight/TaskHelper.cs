@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace CiaranONeill.NPV.Silverlight
         private readonly TServiceClient _serviceClient;
 
         // Stores the TaskCompletionSource. Results in a build error if this is strongly typed to TaskCompletionSource...
-        private object o;
+        //private object o;
 
         /// <summary>
         /// Ctor
@@ -50,15 +51,39 @@ namespace CiaranONeill.NPV.Silverlight
             var asyncMethod = methods.First(x => x.Name == methodName + "Async" && x.GetParameters().Count() == 0);
 
             // Set up an event handler for the Completed event
-            var eventInfo = t.GetEvent(methodName + "Completed");
-            var handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, typeof(TaskHelper<TServiceClient, TResult>).GetMethod("AsyncCompletedHandler"));
-            eventInfo.AddEventHandler(_serviceClient, handler);
+            var completedEvent = t.GetEvent(methodName + "Completed");
+
+            var parameters = completedEvent.EventHandlerType.GetMethod("Invoke").GetParameters().Select(p => Expression.Parameter(p.ParameterType, "p")).ToArray();
+            Action<object, EventArgs> completedAction = (s, e) =>
+            {
+                // Get properties via reflection
+                var properties = e.GetType().GetProperties();
+                var error = properties.First(x => x.Name == "Error").GetValue(e, null) as Exception;
+                var cancelled = (bool)properties.First(x => x.Name == "Cancelled").GetValue(e, null);
+                var result = properties.First(x => x.Name == "Result").GetValue(e, null);
+
+                // Standard TCS now...
+                if (error != null)
+                    tcs.TrySetException(error);
+                else if (cancelled)
+                    tcs.TrySetCanceled();
+                else
+                    tcs.TrySetResult((TResult)result);
+            };
+            // http://stackoverflow.com/questions/3772005/how-to-dynamically-subscribe-to-an-event
+            var exp = Expression.Call(Expression.Constant(completedAction), completedAction.GetType().GetMethod("Invoke"), parameters);
+            var l = Expression.Lambda(exp, parameters);
+            var handler = Delegate.CreateDelegate(completedEvent.EventHandlerType, l.Compile(), "Invoke", false);
+            completedEvent.AddEventHandler(_serviceClient, handler);
+
+            //var handler = Delegate.CreateDelegate(completedEvent.EventHandlerType, this, typeof(TaskHelper<TServiceClient, TResult>).GetMethod("AsyncCompletedHandler"));
+            //completedEvent.AddEventHandler(_serviceClient, handler);
 
             // Invoke the Async method
             asyncMethod.Invoke(_serviceClient, null);
 
             // Promoting TCS to a private field results in build error. Why? Store in object temporarily
-            o = tcs;
+            //o = tcs;
 
             return tcs.Task;
         }
@@ -68,24 +93,24 @@ namespace CiaranONeill.NPV.Silverlight
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void AsyncCompletedHandler(object sender, EventArgs e)
-        {
-            // Promoting TCS to a private field results in build error, so cast o back to it now
-            var tcs = (TaskCompletionSource<TResult>)o;
+        //public void AsyncCompletedHandler(object sender, EventArgs e)
+        //{
+        //    // Promoting TCS to a private field results in build error, so cast o back to it now
+        //    var tcs = (TaskCompletionSource<TResult>)o;
 
-            // Get properties via reflection
-            var properties = e.GetType().GetProperties();
-            var error = properties.First(x => x.Name == "Error").GetValue(e, null) as Exception;
-            var cancelled = (bool)properties.First(x => x.Name == "Cancelled").GetValue(e, null);
-            var result = properties.First(x => x.Name == "Result").GetValue(e, null);
+        //    // Get properties via reflection
+        //    var properties = e.GetType().GetProperties();
+        //    var error = properties.First(x => x.Name == "Error").GetValue(e, null) as Exception;
+        //    var cancelled = (bool)properties.First(x => x.Name == "Cancelled").GetValue(e, null);
+        //    var result = properties.First(x => x.Name == "Result").GetValue(e, null);
 
-            // Standard TCS now...
-            if (error != null)
-                tcs.TrySetException(error);
-            else if (cancelled)
-                tcs.TrySetCanceled();
-            else
-                tcs.TrySetResult((TResult)result);
-        }
+        //    // Standard TCS now...
+        //    if (error != null)
+        //        tcs.TrySetException(error);
+        //    else if (cancelled)
+        //        tcs.TrySetCanceled();
+        //    else
+        //        tcs.TrySetResult((TResult)result);
+        //}
     }
 }

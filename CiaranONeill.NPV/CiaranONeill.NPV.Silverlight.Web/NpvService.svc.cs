@@ -19,6 +19,7 @@ namespace CiaranONeill.NPV.Silverlight.Web
         /// <param name="calculator"></param>
         public NpvService(INpvCalculator calculator)
         {
+            // Would be nice to get Autofac to inject a simple / complex calculator - how to do via WCF?
             _npvCalculator = calculator;
         }
 
