@@ -63,16 +63,16 @@ namespace CiaranONeill.NPV.Tests
                 new NpvData() { Period = new DateTime(2023, 1, 1), Cashflow = 15 },
                 new NpvData() { Period = new DateTime(2024, 1, 1), Cashflow = 20 },
                 new NpvData() { Period = new DateTime(2025, 1, 1), Cashflow = 10 },
-                new NpvData() { Period = new DateTime(2026, 1, 1), Cashflow = 10 },
-                new NpvData() { Period = new DateTime(2027, 1, 1), Cashflow = 5 },
-                new NpvData() { Period = new DateTime(2028, 1, 1), Cashflow = 5 },
-                new NpvData() { Period = new DateTime(2029, 1, 1), Cashflow = 5 },
+                //new NpvData() { Period = new DateTime(2026, 1, 1), Cashflow = 10 },
+                //new NpvData() { Period = new DateTime(2027, 1, 1), Cashflow = 5 },
+                //new NpvData() { Period = new DateTime(2028, 1, 1), Cashflow = 5 },
+                //new NpvData() { Period = new DateTime(2029, 1, 1), Cashflow = 5 },
                 
             };
 
             var actual = sut.CalculateNpv(inputs, 10, RolloverType.Annual, false);
 
-            Assert.Equal(164.05, actual, 2);
+            Assert.Equal(157.55, actual, 2);
         }
 
         [Fact]

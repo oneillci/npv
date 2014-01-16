@@ -10,7 +10,7 @@ namespace CiaranONeill.NPV.Calculator
                 throw new ArgumentException(string.Format("{0} must be between {1} and {2}", name, lower, upper), name);
         }
 
-        public static void GreaterThan(int input, string name, int lower)
+        public static void GreaterThan(double input, string name, double lower)
         {
             if (input <= lower)
                 throw new ArgumentException(string.Format("{0} must be greater than {1}", name, lower), name);

@@ -137,8 +137,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviours\AutoSelectText.cs" />
     <Compile Include="Behaviours\TextBoxFilterService.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Infrastructure\BoolToVisibilityConverter.cs" />
     <Compile Include="Proxies\DateServiceProxy.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Proxies\NpvServiceProxy.cs" />

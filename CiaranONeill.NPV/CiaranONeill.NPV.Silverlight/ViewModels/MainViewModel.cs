@@ -26,6 +26,13 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         public double NetPresentValue { get; set; }
         public Roll SelectedRoll { get; set; }
         public ObservableCollection<Roll> Rolls { get; set; }
+        public bool IsNpv
+        {
+            get
+            {
+                return SelectedRoll.Value.ToLower() == "annual";
+            }
+        }
 
         /// <summary>
         /// Ctor
@@ -39,7 +46,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
 
             LowerRate = 1;
             UpperRate = 15;
-            Increment = 4.0;
+            Increment = 1.0;
             Rolls = new ObservableCollection<Roll>()
             {
                 new Roll { Value = "Annual" },
@@ -51,7 +58,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             LoadSampleData();
 
             Rates = new ObservableCollection<Rate>();
-            IncrementChanged(4);
+            IncrementChanged(Increment);
         }
 
         /// <summary>
