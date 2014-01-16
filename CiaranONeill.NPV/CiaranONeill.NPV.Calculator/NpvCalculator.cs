@@ -20,41 +20,32 @@ namespace CiaranONeill.NPV.Calculator
             Guard.IsInRange(rate, "rate", 0, 100);
 
             double npv = 0;
-            for (int i = 0; i < npvData.Count(); i++)
+            if (!useXnpvFormula)
             {
-                double power = GetPower(npvData[i].Period, i + 1, rolloverType);
-
-                npv += CalculatePresentValue(npvData[i].Cashflow, rate/100, power, rolloverType);
+                for (int i = 0; i < npvData.Count(); i++)
+                {
+                    npv += CalculatePresentValue(npvData[i].Cashflow, rate / 100, i + 1, rolloverType);
+                }
+            }
+            else
+            {
+                var firstDate = npvData.First().Period;
+                for (int i = 0; i < npvData.Count(); i++)
+                {
+                    double power;
+                    power = i == 0 ? 1 : GetPower(firstDate, npvData[i].Period);
+                    npv += CalculatePresentValue(npvData[i].Cashflow, rate / 100, power, rolloverType);
+                }
             }
             return npv;
         }
-
-        public double GetPower(DateTime period, double iteration, RolloverType rolloverType)
+  
+        private double GetPower(DateTime firstDate, DateTime period)
         {
+            double days = (period - firstDate).Days;
+            double yearFraction = days / period.DaysInYear();
 
-            switch(rolloverType)
-            {
-                case RolloverType.Annual:
-                    return iteration;
-
-                case RolloverType.Quarter:
-                    // Get our base iteration
-                    while (iteration > (int)rolloverType)
-                        iteration -= (int)rolloverType;
-
-                    if (iteration == 1)
-                        return 1;
-                    return ((iteration / (int)rolloverType) - (0.25)) + 1 + (iteration / (int)rolloverType);
-                    //return iteration + 1 / 4;
-
-                case RolloverType.Month:
-                    if (iteration > 1)
-                        return 1 + 1 / 12;
-                    return 1;
-
-                default:
-                    return iteration;
-            }
+            return yearFraction;
         }
 
         public double CalculatePresentValue(double cashflow, double rate, double power = 1, RolloverType rolloverType = RolloverType.Annual)
