@@ -24,25 +24,15 @@ namespace CiaranONeill.NPV.Silverlight.Web
         }
 
         [OperationContract]
-        public string DoWork()
-        {
-            return "Hello from WCF";
-        }
-
-        [OperationContract]
         public IEnumerable<double> GetRandomData()
         {
             return _npvCalculator.GetRandomData();
         }
 
         [OperationContract]
-        public Customer[] GetCustomers(Customer customer)
+        public double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
         {
-            return new[]
-            {
-                new Customer { Id = 1, Name = "Ciaran" },
-                new Customer { Id = 2, Name = "Stevie G" }
-            };
+            return _npvCalculator.CalculateNpv(npvData, rate, rolloverType, useXnpvFormula);
         }
-    }
+    }    
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Windows.Controls;
 using Autofac;
 using Caliburn.Micro;
 using CiaranONeill.NPV.Silverlight.Proxies;
@@ -26,6 +27,12 @@ namespace CiaranONeill.NPV.Silverlight
             builder.RegisterAssemblyTypes(typeof(INpvService).Assembly).AsImplementedInterfaces();
             //builder.RegisterGeneric(typeof(ICommandHandler<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
             _container = builder.Build();
+
+            MessageBinder.SpecialValues["$text"] = context =>
+            {
+                var textBox = (TextBox)context.Source;
+                return textBox.Text;
+            };
         }
 
         protected override object GetInstance(Type service, string key)
@@ -44,6 +51,11 @@ namespace CiaranONeill.NPV.Silverlight
                    GetType().Assembly, 
                    typeof(MainViewModel).Assembly
                };
+        }
+
+        protected override void OnUnhandledException(object sender, System.Windows.ApplicationUnhandledExceptionEventArgs e)
+        {
+            base.OnUnhandledException(sender, e);
         }
 
         //protected override IEnumerable<object> GetAllInstances(Type service)

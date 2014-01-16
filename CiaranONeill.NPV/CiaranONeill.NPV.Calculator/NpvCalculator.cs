@@ -6,6 +6,7 @@ namespace CiaranONeill.NPV.Calculator
 {
     public interface INpvCalculator
     {
+        double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
         double CalculatePresentValue(double cashflow, double rate, int periodNumber = 1, RolloverType rolloverType = RolloverType.Annual);
         IEnumerable<double> GetRandomData();
     }
@@ -13,6 +14,18 @@ namespace CiaranONeill.NPV.Calculator
     public class NpvCalculator : INpvCalculator
     {
         private Random rng = new Random();
+
+        public double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
+        {
+            Guard.IsInRange(rate, "rate", 0, 100);
+
+            double npv = 0;
+            for (int i = 0; i < npvData.Count(); i++)
+            {
+                npv += CalculatePresentValue(npvData[i].Cashflow, rate/100, i + 1, rolloverType);
+            }
+            return npv;
+        }
 
         public double CalculatePresentValue(double cashflow, double rate, int periodNumber = 1, RolloverType rolloverType = RolloverType.Annual)
         {
@@ -46,7 +59,12 @@ namespace CiaranONeill.NPV.Calculator
         }
     }
 
-    
+    public class NpvData
+    {
+        public DateTime Period { get; set; }
+        public double Cashflow { get; set; }
+    }
+
     public enum RolloverType
     {
         Annual = 1,

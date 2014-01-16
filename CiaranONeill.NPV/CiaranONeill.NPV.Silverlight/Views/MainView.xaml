@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviours="clr-namespace:CiaranONeill.NPV.Silverlight.Behaviours;assembly=CiaranONeill.NPV.Silverlight"
+    xmlns:cal="http://www.caliburnproject.org"
     xmlns:Controls="clr-namespace:Microsoft.Internal.Pivot.Controls;assembly=System.Windows.Controls.Pivot" x:Class="CiaranONeill.NPV.Silverlight.Views.MainView"
     mc:Ignorable="d"
     Height="857" Width="1070">
@@ -42,25 +43,29 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
 
 		</Grid.RowDefinitions>
 		<TextBox x:Name="LowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0,15,0,0" />
 		<TextBox x:Name="UpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
-		<TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
+        <TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" cal:Message.Attach="[Event TextChanged] = [IncrementChanged($text)]"/>
 		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Lower Rate" VerticalAlignment="Top" Height="16" Margin="10,15,0,0"/>
 		<TextBlock HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" Text="Upper Rate" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
 		<TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
 		<TextBlock HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="Selected Rate" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
-		<ComboBox x:Name="SelectedRate" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="120" Height="20" ItemsSource="{Binding Rates}"/>
-		<Button x:Name="LoadSampleData" Grid.Row="4" Margin="10,25,0,0" Width="145" HorizontalAlignment="Left">
+        <ComboBox x:Name="SelectedRate" SelectedItem="{Binding SelectedRate, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="120" Height="20" ItemsSource="{Binding Rates}"/>
+        <TextBlock Grid.Row="4" Text="Selected Rollover Type" Margin="10,0,0,0"/>
+        <ComboBox SelectedItem="{Binding SelectedRoll, Mode=TwoWay}" ItemsSource="{Binding Rolls}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" Grid.Row="4" Width="120" HorizontalAlignment="Left" cal:Message.Attach="[Event SelectionChanged] = [SelectedRolloverChanged]" />
+
+        <Button x:Name="LoadSampleData" Grid.Row="5" Margin="10,25,0,0" Width="145" HorizontalAlignment="Left">
 			<StackPanel Orientation="Horizontal">
 				<Image Width="16" Height="16" HorizontalAlignment="Left" x:Name="imageTest" Stretch="Fill" VerticalAlignment="Top" Source="arrow_rotate_clockwise.png" />
 				<TextBlock Text="Load Sample Data" Margin="3,0,0,0"/>
 			</StackPanel>
 		</Button>
-		<ItemsControl x:Name="Cashflows" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" ItemTemplate="{StaticResource CashflowInputTemplate}" />
-		<TextBlock HorizontalAlignment="Left" Grid.Row="6" TextWrapping="Wrap" Text="NPV" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
-		<TextBlock x:Name="lblNPV" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="16" />
+		<ItemsControl x:Name="Cashflows" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" ItemTemplate="{StaticResource CashflowInputTemplate}" />
+		<TextBlock HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" Text="NPV" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
+        <TextBlock x:Name="NetPresentValue" Text="{Binding NetPresentValue, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" />
 		<Button x:Name="CalculateNpv" Content="Calculate NPV" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="92" Margin="154,0,0,0" />
 	</Grid>
 </UserControl>

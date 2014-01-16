@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace CiaranONeill.NPV.Silverlight.Proxies
     public interface INpvService
     {
         Task<string> DoWork();
-        Task<ObservableCollection<Customer>> GetCustomers(Customer customer);
+        Task<double> CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
         Task<ObservableCollection<double>> GetRandomData();
     }
 
@@ -21,10 +22,11 @@ namespace CiaranONeill.NPV.Silverlight.Proxies
             return th.GetTask<string>(null);
         }
 
-        public Task<ObservableCollection<Customer>> GetCustomers(Customer customer)
+        public Task<double> CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
         {
-            var th = new TaskHelper<NpvServiceClient, ObservableCollection<Customer>>(new NpvServiceClient());
-            return th.GetTask<ObservableCollection<Customer>>(new object[] { customer });
+            // Would be good to use a ServiceResolver<> here to get an INpvService. This allow service changes without having to Update Service Reference...
+            var th = new TaskHelper<NpvServiceClient, double>(new NpvServiceClient());
+            return th.GetTask<double>(new object[] { npvData, rate, rolloverType, useXnpvFormula });
         }
 
 

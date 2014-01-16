@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7ef79a82-7b63-4873-9c49-03ab47e32496" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ce509387-5049-42ba-8a2f-acbfe32af3aa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,12 +23,12 @@
     <MetadataSource Address="http://localhost:57934/NpvDateService.svc/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="7edf55a2-a3b7-40d7-b0f2-dba76a28e118" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
-    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="6c4c3da3-dba7-41d3-9140-4e603fe7b08b" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="f8ec24fb-f691-4933-b574-a889fec19791" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="3630f675-4fa6-43b3-bc5c-ca36baca3797" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
-    <MetadataFile FileName="CiaranONeill.NPV.Calculator.xsd" MetadataType="Schema" ID="72cf4c81-c542-4cb0-9d0a-3a71cd99b96b" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="d954fca7-e4ea-49ec-9203-1f6cf0c75883" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="266a9fde-72bd-499a-aedb-64379494762d" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="89df8c74-bdbf-4797-8529-8d6e9ba57279" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="88b439a4-fcba-44b1-b949-a1498ab7b2ad" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="5e385e08-ea33-490c-af89-c1b71444e82b" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
+    <MetadataFile FileName="CiaranONeill.NPV.Calculator.xsd" MetadataType="Schema" ID="8370ef4e-bbd3-4ed3-b9f9-bf389c6e7d00" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="3b4d1122-99c0-4977-b33e-06c2efb0c640" SourceId="1" SourceUrl="http://localhost:57934/NpvDateService.svc/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

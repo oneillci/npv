@@ -13,12 +13,12 @@
             </customBinding>
         </bindings>
         <client>
-            <endpoint address="../NpvService.svc" binding="customBinding"
-                bindingConfiguration="CustomBinding_NpvService" contract="NpvServiceReference.NpvService"
-                name="CustomBinding_NpvService" />
             <endpoint address="../NpvDateService.svc" binding="customBinding"
                 bindingConfiguration="CustomBinding_NpvDateService" contract="NpvDateServiceReference.NpvDateService"
                 name="CustomBinding_NpvDateService" />
+            <endpoint address="../NpvService.svc" binding="customBinding"
+                bindingConfiguration="CustomBinding_NpvService" contract="NpvServiceReference.NpvService"
+                name="CustomBinding_NpvService" />
         </client>
     </system.serviceModel>
 </configuration>
