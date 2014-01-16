@@ -21,7 +21,7 @@
         			<RowDefinition/>
         		</Grid.RowDefinitions>
 
-        		<TextBlock Text="{Binding Period, StringFormat=\{0:d\}, TargetNullValue=Date not supplied}" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding Period, StringFormat='{}{0:dd/MM/yyyy}', TargetNullValue=Date not supplied}" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,0,0,0"/>
         		<TextBox Text="{Binding Cashflow, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Width="107" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="4"/>
         	</Grid>
         </DataTemplate>

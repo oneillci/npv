@@ -43,8 +43,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             Rolls = new ObservableCollection<Roll>()
             {
                 new Roll { Value = "Annual" },
-                new Roll { Value = "Quarterly" },
-                new Roll { Value = "Monthly" },
+                new Roll { Value = "Quarter" },
+                new Roll { Value = "Month" },
             };
             SelectedRoll = Rolls[0];
 

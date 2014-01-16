@@ -45,7 +45,8 @@ namespace CiaranONeill.NPV.Tests
             Assert.Equal(27.85798, pv, 4);
         }
 
-        [Fact] void CalculateNpv_ForKnownAnnualValues_ReturnsExpected()
+        [Fact] 
+        public void CalculateNpv_ForKnownAnnualValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
             var inputs = new List<NpvData>()
@@ -69,9 +70,38 @@ namespace CiaranONeill.NPV.Tests
                 
             };
 
-            var expected = sut.CalculateNpv(inputs, 10, RolloverType.Annual, false);
+            var actual = sut.CalculateNpv(inputs, 10, RolloverType.Annual, false);
 
-            Assert.Equal(164.05, expected, 2);
+            Assert.Equal(164.05, actual, 2);
+        }
+
+        [Fact]
+        public void GetPower_ForAnnual_ReturnsIteration()
+        {
+            var sut = new NpvCalculator();
+            for (int i = 0; i < 12; i++)
+            {
+                double expected = i + 1;
+                double actual = sut.GetPower(new DateTime(2014, i + 1, 1), i + 1, RolloverType.Annual);
+                Assert.Equal(expected, actual);
+                
+            }
+        }
+
+        [Fact]
+        public void GetPower_ForQuarter_ReturnsIteration()
+        {
+            var sut = new NpvCalculator();
+            double actual1 = sut.GetPower(new DateTime(2014, 1, 1), 1, RolloverType.Quarter);
+            double actual2 = sut.GetPower(new DateTime(2014, 4, 1), 2, RolloverType.Quarter);
+            double actual3 = sut.GetPower(new DateTime(2014, 7, 1), 3, RolloverType.Quarter);
+            double actual4 = sut.GetPower(new DateTime(2014, 10, 1), 4, RolloverType.Quarter);
+            double actual5 = sut.GetPower(new DateTime(2015, 1, 1), 5, RolloverType.Quarter);
+            double actual6 = sut.GetPower(new DateTime(2015, 4, 1), 6, RolloverType.Quarter);
+            double actual7 = sut.GetPower(new DateTime(2015, 7, 1), 7, RolloverType.Quarter);
+            double actual8 = sut.GetPower(new DateTime(2015, 10, 1), 8, RolloverType.Quarter);
+
+            Assert.Equal(1, actual1);
         }
     }
 }

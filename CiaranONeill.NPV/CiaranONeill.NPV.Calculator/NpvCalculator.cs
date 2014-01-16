@@ -7,7 +7,7 @@ namespace CiaranONeill.NPV.Calculator
     public interface INpvCalculator
     {
         double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
-        double CalculatePresentValue(double cashflow, double rate, int periodNumber = 1, RolloverType rolloverType = RolloverType.Annual);
+        double CalculatePresentValue(double cashflow, double rate, int power = 1, RolloverType rolloverType = RolloverType.Annual);
         IEnumerable<double> GetRandomData();
     }
 
@@ -22,17 +22,48 @@ namespace CiaranONeill.NPV.Calculator
             double npv = 0;
             for (int i = 0; i < npvData.Count(); i++)
             {
-                npv += CalculatePresentValue(npvData[i].Cashflow, rate/100, i + 1, rolloverType);
+                double power = GetPower(npvData[i].Period, i + 1, rolloverType);
+
+                npv += CalculatePresentValue(npvData[i].Cashflow, rate/100, 1, rolloverType);
             }
             return npv;
         }
 
-        public double CalculatePresentValue(double cashflow, double rate, int periodNumber = 1, RolloverType rolloverType = RolloverType.Annual)
+        public double GetPower(DateTime period, double iteration, RolloverType rolloverType)
+        {
+
+            switch(rolloverType)
+            {
+                case RolloverType.Annual:
+                    return iteration;
+
+                case RolloverType.Quarter:
+                    // Get our base iteration
+                    while (iteration > (int)rolloverType)
+                        iteration -= (int)rolloverType;
+
+                    if (iteration == 1)
+                        return 1;
+                    return ((iteration / (int)rolloverType) - (0.25)) + 1 + (iteration / (int)rolloverType);
+                    //return iteration + 1 / 4;
+
+                case RolloverType.Month:
+                    if (iteration > 1)
+                        return 1 + 1 / 12;
+                    return 1;
+
+                default:
+                    return iteration;
+            }
+        }
+
+        public double CalculatePresentValue(double cashflow, double rate, int power = 1, RolloverType rolloverType = RolloverType.Annual)
         {
             Guard.IsInRange(rate, "rate", 0, 100);
-            Guard.GreaterThan(periodNumber, "periodNumber", 0);         
+            Guard.GreaterThan(power, "power", 0);         
 
-            var pv = cashflow / Math.Pow(1 + (rate / (int)rolloverType), periodNumber);
+            //var pv = cashflow / Math.Pow(1 + (rate / (int)rolloverType), periodNumber);
+            var pv = cashflow / Math.Pow(1 + rate, power);
 
             return pv;
         }
