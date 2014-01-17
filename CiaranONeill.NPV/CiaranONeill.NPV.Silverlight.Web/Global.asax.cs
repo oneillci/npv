@@ -11,7 +11,7 @@ namespace CiaranONeill.NPV.Silverlight.Web
         protected void Application_Start(object sender, EventArgs e)
         {
             var container = Bootstrapper.Configure();
-            AutofacHostFactory.Container = container;
+            AutofacHostFactory.Container = container.BeginLifetimeScope();
             //using (var scope = container.BeginLifetimeScope())
             //{
             //    var a = scope.Resolve<NpvDateService>();

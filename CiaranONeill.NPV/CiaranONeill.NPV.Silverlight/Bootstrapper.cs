@@ -25,7 +25,6 @@ namespace CiaranONeill.NPV.Silverlight
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
             builder.RegisterType<MainViewModel>();
             builder.RegisterAssemblyTypes(typeof(INpvService).Assembly).AsImplementedInterfaces();
-            //builder.RegisterGeneric(typeof(ICommandHandler<>)).AsImplementedInterfaces().InstancePerLifetimeScope();
             _container = builder.Build();
 
             MessageBinder.SpecialValues["$text"] = context =>

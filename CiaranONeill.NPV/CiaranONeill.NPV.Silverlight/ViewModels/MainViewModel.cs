@@ -81,6 +81,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         /// </summary>
         private IEnumerable<string> Validate()
         {
+            if (UpperRate > 100)
+                yield return "Upper rate must be less than 100";
             if (LowerRate > UpperRate)
                 yield return "Lower rate must be less than upper rate";
             if (Increment > UpperRate)

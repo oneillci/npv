@@ -66,25 +66,25 @@ namespace CiaranONeill.NPV.Calculator
         /// <returns></returns>
         public IEnumerable<double> GetRandomData()
         {
-            return new double[]
-            {
-                25,
-                25,
-                30,
-                35,
-                20,
-                15,
-                25,
-                25,
-                15,
-                15,
-                20,
-                10,
-                10,
-                5,
-                5,
-                5,
-            };
+            //return new double[]
+            //{
+            //    25,
+            //    25,
+            //    30,
+            //    35,
+            //    20,
+            //    15,
+            //    25,
+            //    25,
+            //    15,
+            //    15,
+            //    20,
+            //    10,
+            //    10,
+            //    5,
+            //    5,
+            //    5,
+            //};
            
 
             var result = new List<double>();

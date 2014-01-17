@@ -4,16 +4,15 @@
              x:Class="CiaranONeill.NPV.Silverlight.App"
              >
     <Application.Resources>
-                <local:Bootstrapper x:Key="bootstrapper" />
-        <!--<ResourceDictionary>
+        <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                --><!-- Light Theme --><!--
+                <ResourceDictionary>
+                    <local:Bootstrapper x:Key="bootstrapper" />
+                </ResourceDictionary>
+                
                 <ResourceDictionary Source="Themes/Metro/Light/Metro.MSControls.Core.Implicit.xaml" />
-                <ResourceDictionary Source="Themes/Metro/Light/Metro.MSControls.SDK.Implicit.xaml" />
-                <ResourceDictionary Source="Themes/Metro/Light/Metro.MSControls.Toolkit.Implicit.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>-->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
