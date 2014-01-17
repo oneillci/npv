@@ -7,14 +7,23 @@ namespace CiaranONeill.NPV.Calculator
     public interface INpvCalculator
     {
         double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
-        double CalculatePresentValue(double cashflow, double rate, double power = 1, RolloverType rolloverType = RolloverType.Annual);
+        double CalculatePresentValue(double cashflow, double rate, double exponent , RolloverType rolloverType = RolloverType.Annual);
         IEnumerable<double> GetRandomData();
     }
+
 
     public class NpvCalculator : INpvCalculator
     {
         private Random rng = new Random();
 
+        /// <summary>
+        /// Calculates the NPV for a series of cashflows
+        /// </summary>
+        /// <param name="npvData"></param>
+        /// <param name="rate"></param>
+        /// <param name="rolloverType"></param>
+        /// <param name="useXnpvFormula">When true the return value is calculated based on the Excel XNPV formula, when false simply uses the standard NPV formula</param>
+        /// <returns></returns>
         public double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
         {
             Guard.IsInRange(rate, "rate", 0, 100);
@@ -33,32 +42,28 @@ namespace CiaranONeill.NPV.Calculator
                 for (int i = 0; i < npvData.Count(); i++)
                 {
                     double power;
-                    power = i == 0 ? 1 : GetPower(firstDate, npvData[i].Period);
+                    power = i == 0 ? 0 : GetNpvExponent(firstDate, npvData[i].Period);
                     npv += CalculatePresentValue(npvData[i].Cashflow, rate / 100, power, rolloverType);
                 }
             }
             return npv;
         }
   
-        private double GetPower(DateTime firstDate, DateTime period)
-        {
-            double days = (period - firstDate).Days;
-            double yearFraction = days / period.DaysInYear();
 
-            return yearFraction;
-        }
-
-        public double CalculatePresentValue(double cashflow, double rate, double power = 1, RolloverType rolloverType = RolloverType.Annual)
+        public double CalculatePresentValue(double cashflow, double rate, double exponent, RolloverType rolloverType = RolloverType.Annual)
         {
             Guard.IsInRange(rate, "rate", 0, 100);
-            Guard.GreaterThan(power, "power", 0);         
+            Guard.GreaterThan(exponent, "power", -1);         
 
-            //var pv = cashflow / Math.Pow(1 + (rate / (int)rolloverType), periodNumber);
-            var pv = cashflow / Math.Pow(1 + rate, power);
+            var pv = cashflow / Math.Pow(1 + rate, exponent);
 
             return pv;
         }
 
+        /// <summary>
+        /// Returns some random doubles that can be used in the UI
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<double> GetRandomData()
         {
             return new double[]
@@ -93,12 +98,27 @@ namespace CiaranONeill.NPV.Calculator
             return result;
         }
 
+        /// <summary>
+        /// Gets a random double (optionally negative)
+        /// </summary>
         private double GetRandomDouble(bool generateNegativeValue)
         {
             double maxValue = generateNegativeValue ? -5000 : 30000;
             double minValue = generateNegativeValue ? 0 : 500;
 
             return rng.NextDouble() * (maxValue - minValue) + minValue;
+        }
+
+        /// <summary>
+        /// Returns the exponent for an NPV calculation
+        /// </summary>
+        private double GetNpvExponent(DateTime firstDate, DateTime period)
+        {
+            double days = (period - firstDate).Days;
+            //double exponent = days / period.DaysInYear(); // Excel doesn't seem to take leap years into account? I won't either...
+            double exponent = days / 365;
+
+            return exponent;
         }
     }
 

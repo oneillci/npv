@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using CiaranONeill.NPV.Silverlight.Extensions;
-using CiaranONeill.NPV.Silverlight.NpvDateServiceReference;
 using CiaranONeill.NPV.Silverlight.NpvServiceReference;
 using CiaranONeill.NPV.Silverlight.Proxies;
 using PropertyChanged;
@@ -74,7 +73,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 return;
             }
             var roll = (NpvServiceReference.RolloverType)Enum.Parse(typeof(NpvServiceReference.RolloverType), SelectedRoll.Value, true);
-            NetPresentValue = await _npvService.CalculateNpv(Cashflows, SelectedRate.Value, roll, false);
+            NetPresentValue = await _npvService.CalculateNpv(Cashflows, SelectedRate.Value, roll, !IsNpv);
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         /// <summary>
         /// When the selected roll changes, update the sample data
         /// </summary>
-        public async void SelectedRolloverChanged()
+        public void SelectedRolloverChanged()
         {
             LoadSampleData();
         }
