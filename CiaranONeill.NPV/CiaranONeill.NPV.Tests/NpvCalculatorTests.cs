@@ -61,7 +61,7 @@ namespace CiaranONeill.NPV.Tests
         }
 
         [Fact]
-        public void CalculateNpv_ForKnownMonthDateValues_ReturnsExpected()
+        public void CalculateNpv_ForKnownMonthValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
             var inputs = new List<NpvData>()
@@ -86,7 +86,7 @@ namespace CiaranONeill.NPV.Tests
         }
 
         [Fact]
-        public void CalculateNpv_ForKnownQuarterDateValues_ReturnsExpected()
+        public void CalculateNpv_ForKnownQuarterValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
             var inputs = new List<NpvData>()
