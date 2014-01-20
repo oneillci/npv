@@ -33,6 +33,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 return SelectedRoll.Value.ToLower() == "annual";
             }
         }
+        public ObservableCollection<double> NpvList { get; set; }
         public bool PreserveValues { get; set; }
         public bool LoadKnownValues { get; set; }
 
@@ -60,6 +61,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             SelectedRoll = Rolls[0];
             LoadKnownValues = true;
             PreserveValues = true;
+            NpvList = new ObservableCollection<double>();
             LoadSampleData();
 
             Rates = new ObservableCollection<Rate>();
@@ -147,6 +149,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
 
             Cashflows = list.ToObservableCollection();
             NetPresentValue = 0;
+            NpvList = Cashflows.Select(x => x.Cashflow).ToObservableCollection();
         }
     }
 
