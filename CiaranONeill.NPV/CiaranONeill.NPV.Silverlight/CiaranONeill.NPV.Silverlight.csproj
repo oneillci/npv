@@ -170,6 +170,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <None Include="Service References\NpvServiceReference\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvServiceReference\CiaranONeill.NPV.Calculator.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvServiceReference\service.wsdl" />
+    <None Include="Service References\NpvServiceReference\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NpvServiceReference\service1.wsdl" />
+    <None Include="Service References\NpvServiceReference\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Themes\Metro\Light\Metro.MSControls.SDK.Implicit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -212,20 +226,6 @@
     </None>
     <None Include="Service References\NpvDateServiceReference\service1.wsdl" />
     <None Include="Service References\NpvDateServiceReference\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NpvServiceReference\Arrays1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NpvServiceReference\CiaranONeill.NPV.Calculator1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NpvServiceReference\service2.wsdl" />
-    <None Include="Service References\NpvServiceReference\service2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\NpvServiceReference\service21.wsdl" />
-    <None Include="Service References\NpvServiceReference\service21.xsd">
       <SubType>Designer</SubType>
     </None>
     <Resource Include="arrow_rotate_clockwise.png" />

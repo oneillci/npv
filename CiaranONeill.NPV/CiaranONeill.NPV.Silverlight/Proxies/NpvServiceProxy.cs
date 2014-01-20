@@ -11,7 +11,7 @@ namespace CiaranONeill.NPV.Silverlight.Proxies
     {
         Task<string> DoWork();
         Task<double> CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
-        Task<ObservableCollection<double>> GetRandomData();
+        Task<ObservableCollection<double>> GetRandomData(bool loadKnownValues);
     }
 
     public class NpvServiceProxy : INpvService
@@ -30,10 +30,10 @@ namespace CiaranONeill.NPV.Silverlight.Proxies
         }
 
 
-        public Task<ObservableCollection<double>> GetRandomData()
+        public Task<ObservableCollection<double>> GetRandomData(bool loadKnownValues)
         {
             var th = new TaskHelper<NpvServiceClient, ObservableCollection<double>>(new NpvServiceClient());
-            return th.GetTask<ObservableCollection<double>>(null);
+            return th.GetTask<ObservableCollection<double>>(new object[] { loadKnownValues});
 
             var tcs = new TaskCompletionSource<ObservableCollection<double>>();
 

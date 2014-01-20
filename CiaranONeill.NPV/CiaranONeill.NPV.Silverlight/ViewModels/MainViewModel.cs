@@ -17,6 +17,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         private readonly INpvDateService _dateService;
 
         public ObservableCollection<NpvData> Cashflows { get; set; }
+        public double InitialInvestment { get; set; }
         public double LowerRate { get; set; }
         public double UpperRate { get; set; }
         public double Increment { get; set; }
@@ -32,6 +33,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 return SelectedRoll.Value.ToLower() == "annual";
             }
         }
+        public bool PreserveValues { get; set; }
+        public bool LoadKnownValues { get; set; }
 
         /// <summary>
         /// Ctor
@@ -43,6 +46,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             _dateService = dateService;
             _npvService = npvService;
 
+            Cashflows = new ObservableCollection<NpvData>();
+            InitialInvestment = 1000;
             LowerRate = 1;
             UpperRate = 15;
             Increment = 1.0;
@@ -53,7 +58,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 new Roll { Value = "Month" },
             };
             SelectedRoll = Rolls[0];
-
+            LoadKnownValues = true;
+            PreserveValues = true;
             LoadSampleData();
 
             Rates = new ObservableCollection<Rate>();
@@ -128,7 +134,11 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             var list = new List<NpvData>();
             var roll = (NpvDateServiceReference.RolloverType)Enum.Parse(typeof(NpvServiceReference.RolloverType), SelectedRoll.Value, true);
             var dates = await _dateService.GetDates(roll);
-            var data = await _npvService.GetRandomData();
+            var data = new ObservableCollection<double>();
+            
+            data = PreserveValues && Cashflows.Count > 0 
+                ? Cashflows.Select(x => x.Cashflow).ToObservableCollection() 
+                : await _npvService.GetRandomData(LoadKnownValues);
 
             for (int i = 0; i < dates.Count(); i++)
             {

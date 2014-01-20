@@ -161,7 +161,7 @@ namespace CiaranONeill.NPV.Silverlight.Behaviours
 
             if (negativeAllowed && (key == Key.Subtract || (key == Key.Unknown && platformKeyCode == 189)))
             {
-                return 0 == textBox.Text.Length;
+                return 0 == textBox.Text.Length || textBox.Text.Length == textBox.SelectedText.Length;
             }
             return false;
         }
@@ -182,7 +182,7 @@ namespace CiaranONeill.NPV.Silverlight.Behaviours
             {
                 if (decimalPlaces > 0 && textBox.Text.Contains("."))
                 {
-                    return textBox.Text.Split('.')[1].Length < decimalPlaces;
+                    return textBox.Text.Split('.')[1].Length < decimalPlaces || textBox.Text.Length == textBox.SelectedText.Length;
                 }
                 return true;
             }

@@ -8,7 +8,7 @@ namespace CiaranONeill.NPV.Calculator
     {
         double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
         double CalculatePresentValue(double cashflow, double rate, double exponent , RolloverType rolloverType = RolloverType.Annual);
-        IEnumerable<double> GetRandomData();
+        IEnumerable<double> GetRandomData(bool loadKnownValues);
     }
 
 
@@ -64,27 +64,28 @@ namespace CiaranONeill.NPV.Calculator
         /// Returns some random doubles that can be used in the UI
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<double> GetRandomData()
+        public IEnumerable<double> GetRandomData(bool loadKnownValues)
         {
-            //return new double[]
-            //{
-            //    25,
-            //    25,
-            //    30,
-            //    35,
-            //    20,
-            //    15,
-            //    25,
-            //    25,
-            //    15,
-            //    15,
-            //    20,
-            //    10,
-            //    10,
-            //    5,
-            //    5,
-            //    5,
-            //};
+            if (loadKnownValues)
+                return new double[]
+                {
+                    25,
+                    25,
+                    30,
+                    35,
+                    20,
+                    15,
+                    25,
+                    25,
+                    15,
+                    15,
+                    20,
+                    10,
+                    10,
+                    5,
+                    5,
+                    5,
+                };
            
 
             var result = new List<double>();

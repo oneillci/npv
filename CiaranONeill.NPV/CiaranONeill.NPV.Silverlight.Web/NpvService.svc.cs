@@ -24,9 +24,9 @@ namespace CiaranONeill.NPV.Silverlight.Web
         }
 
         [OperationContract]
-        public IEnumerable<double> GetRandomData()
+        public IEnumerable<double> GetRandomData(bool loadKnownValues)
         {
-            return _npvCalculator.GetRandomData();
+            return _npvCalculator.GetRandomData(loadKnownValues);
         }
 
         [OperationContract]
