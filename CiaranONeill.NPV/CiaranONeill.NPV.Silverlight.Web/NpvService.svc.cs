@@ -29,14 +29,14 @@ namespace CiaranONeill.NPV.Silverlight.Web
             return _npvCalculator.GetRandomData(loadKnownValues);
         }
 
-        [OperationContract]
-        public double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
-        {
-            return _npvCalculator.CalculateNpv(npvData, rate, rolloverType, useXnpvFormula);
-        }
+        //[OperationContract]
+        //public double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
+        //{
+        //    return _npvCalculator.CalculateNpv(npvData, rate, rolloverType, useXnpvFormula);
+        //}
 
         [OperationContract]
-        public double CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
+        public NpvResponse CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
         {
             return _npvCalculator.CalculateNpvForNpvRequest(request, useXnpvFormula);
         }

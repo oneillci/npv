@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Windows;
 using CiaranONeill.NPV.Silverlight.Extensions;
 using CiaranONeill.NPV.Silverlight.NpvServiceReference;
@@ -17,7 +18,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         private readonly INpvService _npvService;
         private readonly INpvDateService _dateService;
 
-        public ObservableCollection<NpvData> Cashflows { get; set; }
+        public ObservableCollection<Cashflow> Cashflows { get; set; }
         public double InitialInvestment { get; set; }
         public double LowerRate { get; set; }
         public double UpperRate { get; set; }
@@ -34,7 +35,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 return SelectedRoll.Value.ToLower() == "annual";
             }
         }
-        public ObservableCollection<double> NpvList { get; set; }
+        public ObservableCollection<Npv> NpvList { get; set; }
         public bool PreserveValues { get; set; }
         public bool LoadKnownValues { get; set; }
 
@@ -48,7 +49,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             _dateService = dateService;
             _npvService = npvService;
 
-            Cashflows = new ObservableCollection<NpvData>();
+            Cashflows = new ObservableCollection<Cashflow>();
             InitialInvestment = 1000;
             LowerRate = 1;
             UpperRate = 15;
@@ -62,7 +63,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             SelectedRoll = Rolls[0];
             LoadKnownValues = true;
             PreserveValues = true;
-            NpvList = new ObservableCollection<double>();
+            NpvList = new ObservableCollection<Npv>();
             LoadSampleData();
 
             Rates = new ObservableCollection<Rate>();
@@ -82,7 +83,31 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 return;
             }
             var roll = (NpvServiceReference.RolloverType)Enum.Parse(typeof(NpvServiceReference.RolloverType), SelectedRoll.Value, true);
-            NetPresentValue = await _npvService.CalculateNpv(Cashflows, SelectedRate.Value, roll, !IsNpv);
+
+            var npvRequest = new NpvRequest
+            {
+                Cashflows = this.Cashflows, 
+                Increment = this.Increment, 
+                InitialInvestment = this.InitialInvestment, 
+                LowerRate = this.LowerRate, 
+                UpperRate = this.UpperRate,
+                RollType = roll
+            };
+                
+
+            //NetPresentValue = await _npvService.CalculateNpv(Cashflows, SelectedRate.Value, roll, !IsNpv);
+            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, false);
+            
+            NetPresentValue = values.NetPresentValues.First(x => x.Rate == SelectedRate.Value).Value;
+
+            NpvList.Clear();
+            values.NetPresentValues.ToObservable()
+                .Zip(Observable.Interval(TimeSpan.FromMilliseconds(15)), (npvData, time) => npvData)
+                .ObserveOnDispatcher()
+                .Subscribe(x => NpvList.Add(new Npv{ Rate = x.Rate, Value = x.Value}));
+
+            //NpvList = Cashflows.Select(x => x.Amount).ToObservableCollection();
+
         }
 
         /// <summary>
@@ -134,30 +159,22 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         /// </summary>
         public async void LoadSampleData()
         {
-            var list = new List<NpvData>();
+            var list = new List<Cashflow>();
             var roll = (NpvDateServiceReference.RolloverType)Enum.Parse(typeof(NpvServiceReference.RolloverType), SelectedRoll.Value, true);
             var dates = await _dateService.GetDates(roll);
             var data = new ObservableCollection<double>();
             
             data = PreserveValues && Cashflows.Count > 0 
-                ? Cashflows.Select(x => x.Cashflow).ToObservableCollection() 
+                ? Cashflows.Select(x => x.Amount).ToObservableCollection() 
                 : await _npvService.GetRandomData(LoadKnownValues);
 
             for (int i = 0; i < dates.Count(); i++)
             {
-                list.Add(new NpvData { Period = dates[i], Cashflow = data[i] });
+                list.Add(new Cashflow { Period = dates[i], Amount = data[i] });
             }
 
             Cashflows = list.ToObservableCollection();
-            NetPresentValue = 0;
-
-            NpvList.Clear();
-            Cashflows.ToObservable()
-                .Zip(Observable.Interval(TimeSpan.FromMilliseconds(15)), (npvData, time) => npvData)
-                .ObserveOnDispatcher()
-                .Subscribe(x => NpvList.Add(x.Cashflow));
-
-            //NpvList = Cashflows.Select(x => x.Amount).ToObservableCollection();
+            NetPresentValue = 0;            
         }
     }
 

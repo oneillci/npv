@@ -8,7 +8,7 @@ namespace CiaranONeill.NPV.Calculator
     {
         double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
         double CalculatePresentValue(double cashflow, double rate, double exponent , RolloverType rolloverType = RolloverType.Annual);
-        double CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula);
+        NpvResponse CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula);
         IEnumerable<double> GetRandomData(bool loadKnownValues);
     }
 
@@ -50,9 +50,17 @@ namespace CiaranONeill.NPV.Calculator
             return npv;
         }
 
-        public double CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
+        public NpvResponse CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
         {
-            return 10;
+            var response = new NpvResponse();
+
+            for (double rate = request.LowerRate; rate <= request.UpperRate; rate+= request.Increment)
+            {
+                var npv = CalculateNpv(request.Cashflows, rate, request.RollType, useXnpvFormula);
+                response.NetPresentValues.Add(new Npv{ Rate = rate, Value = npv});
+            }
+
+            return response;
         }
   
 

@@ -6,8 +6,19 @@
                     <binaryMessageEncoding />
                     <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
                 </binding>
+                <binding name="CustomBinding_NpvService">
+                    <binaryMessageEncoding />
+                    <httpTransport maxReceivedMessageSize="2147483647" maxBufferSize="2147483647" />
+                </binding>
             </customBinding>
         </bindings>
-        <client />
+        <client>
+            <endpoint address="../NpvDateService.svc" binding="customBinding"
+                bindingConfiguration="CustomBinding_NpvDateService" contract="NpvDateServiceReference.NpvDateService"
+                name="CustomBinding_NpvDateService" />
+            <endpoint address="../NpvService.svc" binding="customBinding"
+                bindingConfiguration="CustomBinding_NpvService" contract="NpvServiceReference.NpvService"
+                name="CustomBinding_NpvService" />
+        </client>
     </system.serviceModel>
 </configuration>

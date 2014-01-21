@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a7eb2b82-cef3-4cab-9531-b1f48cbc086b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:57934/NpvService.svc/mex/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service2.wsdl" MetadataType="Wsdl" ID="fc697730-c7de-445c-8d5e-98fb9bacfee4" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex/mex" />
+    <MetadataFile FileName="service21.wsdl" MetadataType="Wsdl" ID="233ba31d-5df4-49ed-b31e-bcb65a4e6382" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="a41458aa-1d04-4d7e-bcc4-2d7f01a66c54" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="e2566c9c-0330-45cb-913c-961d8d1be8bf" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex/mex" />
+    <MetadataFile FileName="Arrays1.xsd" MetadataType="Schema" ID="3b95ccf3-ed13-4351-b256-33015b8e512a" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex/mex" />
+    <MetadataFile FileName="CiaranONeill.NPV.Calculator1.xsd" MetadataType="Schema" ID="2a4e9e50-ba98-4169-90df-a6d1c7d918d7" SourceId="1" SourceUrl="http://localhost:57934/NpvService.svc/mex/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
