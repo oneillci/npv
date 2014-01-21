@@ -39,20 +39,20 @@ namespace CiaranONeill.NPV.Tests
         public void CalculateNpv_ForKnownAnnualValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
-            var inputs = new List<NpvData>()
+            var inputs = new List<Cashflow>()
             {
-                new NpvData() { Period = new DateTime(2014, 1, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2015, 1, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2016, 1, 1), Cashflow = 30 },
-                new NpvData() { Period = new DateTime(2017, 1, 1), Cashflow = 35 },
-                new NpvData() { Period = new DateTime(2018, 1, 1), Cashflow = 20 },
-                new NpvData() { Period = new DateTime(2019, 1, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2020, 1, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2021, 1, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2022, 1, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2023, 1, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2024, 1, 1), Cashflow = 20 },
-                new NpvData() { Period = new DateTime(2025, 1, 1), Cashflow = 10 },                
+                new Cashflow() { Period = new DateTime(2014, 1, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2015, 1, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2016, 1, 1), Amount = 30 },
+                new Cashflow() { Period = new DateTime(2017, 1, 1), Amount = 35 },
+                new Cashflow() { Period = new DateTime(2018, 1, 1), Amount = 20 },
+                new Cashflow() { Period = new DateTime(2019, 1, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2020, 1, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2021, 1, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2022, 1, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2023, 1, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2024, 1, 1), Amount = 20 },
+                new Cashflow() { Period = new DateTime(2025, 1, 1), Amount = 10 },                
             };
 
             var actual = sut.CalculateNpv(inputs, 10, RolloverType.Annual, false);
@@ -64,20 +64,20 @@ namespace CiaranONeill.NPV.Tests
         public void CalculateNpv_ForKnownMonthValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
-            var inputs = new List<NpvData>()
+            var inputs = new List<Cashflow>()
             {
-                new NpvData() { Period = new DateTime(2014, 1, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2014, 2, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2014, 3, 1), Cashflow = 30 },
-                new NpvData() { Period = new DateTime(2014, 4, 1), Cashflow = 35 },
-                new NpvData() { Period = new DateTime(2014, 5, 1), Cashflow = 20 },
-                new NpvData() { Period = new DateTime(2014, 6, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2014, 7, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2014, 8, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2014, 9, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2014, 10, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2014, 11, 1), Cashflow = 20 },
-                new NpvData() { Period = new DateTime(2014, 12, 1), Cashflow = 10 },                
+                new Cashflow() { Period = new DateTime(2014, 1, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2014, 2, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2014, 3, 1), Amount = 30 },
+                new Cashflow() { Period = new DateTime(2014, 4, 1), Amount = 35 },
+                new Cashflow() { Period = new DateTime(2014, 5, 1), Amount = 20 },
+                new Cashflow() { Period = new DateTime(2014, 6, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2014, 7, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2014, 8, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2014, 9, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2014, 10, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2014, 11, 1), Amount = 20 },
+                new Cashflow() { Period = new DateTime(2014, 12, 1), Amount = 10 },                
             };
 
             var actual = sut.CalculateNpv(inputs, 10, RolloverType.Month, true);
@@ -89,20 +89,20 @@ namespace CiaranONeill.NPV.Tests
         public void CalculateNpv_ForKnownQuarterValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
-            var inputs = new List<NpvData>()
+            var inputs = new List<Cashflow>()
             {
-                new NpvData() { Period = new DateTime(2014, 1, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2014, 4, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2014, 7, 1), Cashflow = 30 },
-                new NpvData() { Period = new DateTime(2014, 10, 1), Cashflow = 35 },
-                new NpvData() { Period = new DateTime(2015, 1, 1), Cashflow = 20 },
-                new NpvData() { Period = new DateTime(2015, 4, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2015, 7, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2015, 10, 1), Cashflow = 25 },
-                new NpvData() { Period = new DateTime(2016, 1, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2016, 4, 1), Cashflow = 15 },
-                new NpvData() { Period = new DateTime(2016, 7, 1), Cashflow = 20 },
-                new NpvData() { Period = new DateTime(2016, 10, 1), Cashflow = 10 },                
+                new Cashflow() { Period = new DateTime(2014, 1, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2014, 4, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2014, 7, 1), Amount = 30 },
+                new Cashflow() { Period = new DateTime(2014, 10, 1), Amount = 35 },
+                new Cashflow() { Period = new DateTime(2015, 1, 1), Amount = 20 },
+                new Cashflow() { Period = new DateTime(2015, 4, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2015, 7, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2015, 10, 1), Amount = 25 },
+                new Cashflow() { Period = new DateTime(2016, 1, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2016, 4, 1), Amount = 15 },
+                new Cashflow() { Period = new DateTime(2016, 7, 1), Amount = 20 },
+                new Cashflow() { Period = new DateTime(2016, 10, 1), Amount = 10 },                
             };
 
             var actual = sut.CalculateNpv(inputs, 10, RolloverType.Month, true);

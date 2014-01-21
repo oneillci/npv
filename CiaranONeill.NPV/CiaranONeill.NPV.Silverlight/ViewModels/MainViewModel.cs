@@ -151,12 +151,13 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             Cashflows = list.ToObservableCollection();
             NetPresentValue = 0;
 
+            NpvList.Clear();
             Cashflows.ToObservable()
                 .Zip(Observable.Interval(TimeSpan.FromMilliseconds(15)), (npvData, time) => npvData)
                 .ObserveOnDispatcher()
                 .Subscribe(x => NpvList.Add(x.Cashflow));
 
-            //NpvList = Cashflows.Select(x => x.Cashflow).ToObservableCollection();
+            //NpvList = Cashflows.Select(x => x.Amount).ToObservableCollection();
         }
     }
 

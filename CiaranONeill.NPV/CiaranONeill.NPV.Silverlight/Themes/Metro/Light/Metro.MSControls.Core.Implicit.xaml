@@ -449,7 +449,7 @@
 					<Grid>
 						<Rectangle Stroke="{TemplateBinding BorderBrush}" Fill="{TemplateBinding Background}" StrokeThickness="{TemplateBinding BorderThickness}" />
 						<StackPanel Orientation="Horizontal" d:LayoutOverrides="Width, Height">
-							<ContentPresenter Content="{Binding}" ContentTemplate="{Binding Series.LegendItemBadgeTemplate}" Margin="7,0,0,0" />
+							<!--<ContentPresenter Content="{Binding}" ContentTemplate="{Binding Series.LegendItemBadgeTemplate}" Margin="7,0,0,0" />-->
 							<ContentPresenter Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}" />
 						</StackPanel>
 					</Grid>

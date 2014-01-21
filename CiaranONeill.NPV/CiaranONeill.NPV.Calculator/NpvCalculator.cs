@@ -6,8 +6,9 @@ namespace CiaranONeill.NPV.Calculator
 {
     public interface INpvCalculator
     {
-        double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
+        double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
         double CalculatePresentValue(double cashflow, double rate, double exponent , RolloverType rolloverType = RolloverType.Annual);
+        double CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula);
         IEnumerable<double> GetRandomData(bool loadKnownValues);
     }
 
@@ -24,7 +25,7 @@ namespace CiaranONeill.NPV.Calculator
         /// <param name="rolloverType"></param>
         /// <param name="useXnpvFormula">When true the return value is calculated based on the Excel XNPV formula, when false simply uses the standard NPV formula</param>
         /// <returns></returns>
-        public double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
+        public double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
         {
             Guard.IsInRange(rate, "rate", 0, 100);
 
@@ -33,7 +34,7 @@ namespace CiaranONeill.NPV.Calculator
             {
                 for (int i = 0; i < npvData.Count(); i++)
                 {
-                    npv += CalculatePresentValue(npvData[i].Cashflow, rate / 100, i + 1, rolloverType);
+                    npv += CalculatePresentValue(npvData[i].Amount, rate / 100, i + 1, rolloverType);
                 }
             }
             else
@@ -43,10 +44,15 @@ namespace CiaranONeill.NPV.Calculator
                 {
                     double power;
                     power = i == 0 ? 0 : GetNpvExponent(firstDate, npvData[i].Period);
-                    npv += CalculatePresentValue(npvData[i].Cashflow, rate / 100, power, rolloverType);
+                    npv += CalculatePresentValue(npvData[i].Amount, rate / 100, power, rolloverType);
                 }
             }
             return npv;
+        }
+
+        public double CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
+        {
+            return 10;
         }
   
 
@@ -121,12 +127,6 @@ namespace CiaranONeill.NPV.Calculator
 
             return exponent;
         }
-    }
-
-    public class NpvData
-    {
-        public DateTime Period { get; set; }
-        public double Cashflow { get; set; }
     }
 
     public enum RolloverType

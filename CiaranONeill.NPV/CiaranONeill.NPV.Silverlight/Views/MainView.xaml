@@ -24,7 +24,7 @@
         		</Grid.RowDefinitions>
 
         		<TextBlock Text="{Binding Period, StringFormat=\{0:dd/MM/yyyy\}, TargetNullValue=Date not supplied}" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,0,0,0"/>
-        		<TextBox Text="{Binding Cashflow, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Width="107" behaviours:TextBoxFilterService.Filter="Decimal" behaviours:TextBoxFilterService.DecimalPlaces="4"/>
+        		<TextBox Text="{Binding Amount, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Width="107" behaviours:TextBoxFilterService.Filter="Decimal" behaviours:TextBoxFilterService.DecimalPlaces="4"/>
         	</Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -59,6 +59,9 @@
 		<TextBlock HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
 		<TextBlock HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="Selected Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
 		<ComboBox x:Name="SelectedRate" SelectedItem="{Binding SelectedRate, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="150" Height="20" ItemsSource="{Binding Rates}"/>
+        
+		<sdk:DataGrid x:Name="NpvList" ItemsSource="{Binding NpvList}" HorizontalAlignment="Left" Margin="12,8,0,-105" VerticalAlignment="Top" Grid.RowSpan="10" Grid.Column="4" Grid.ColumnSpan="4"/>
+        
 		<TextBlock Grid.Row="5" Text="Selected Rollover Type" Margin="10,10,0,0"/>
 		<ComboBox SelectedItem="{Binding SelectedRoll, Mode=TwoWay}" ItemsSource="{Binding Rolls}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" Grid.Row="5" Width="150" HorizontalAlignment="Left" cal:Message.Attach="[Event SelectionChanged] = [SelectedRolloverChanged]" />
 
@@ -71,24 +74,19 @@
 		<ItemsControl x:Name="Cashflows" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top" ItemTemplate="{StaticResource CashflowInputTemplate}" Grid.ColumnSpan="2" MinHeight="30"/>
 		<TextBlock HorizontalAlignment="Left" Grid.Row="8" TextWrapping="Wrap" Text="NPV" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
 		<TextBlock x:Name="NetPresentValue" Text="{Binding NetPresentValue, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" />
-		<Button x:Name="CalculateNpv" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="123" Margin="8,0,0,0">
-			<StackPanel Orientation="Horizontal">
-				<Image Width="16" Height="16" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Source="calculator.png" Margin="0,2,0,0" />
-				<TextBlock Text="Calculate NPV" Margin="3,0,0,0"/>
-			</StackPanel>
-		</Button>
-		<StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="5"/>
+        <Button x:Name="CalculateNpv" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="123" Margin="8,0,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="16" Height="16" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Source="calculator.png" Margin="0,2,0,0" />
+                <TextBlock Text="Calculate NPV" Margin="3,0,0,0"/>
+            </StackPanel>
+        </Button>
 
-		<StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="6" >
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="6" >
 			<TextBlock Visibility="{Binding IsNpv, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-42,0" TextWrapping="Wrap" Text="Uses excel-like NPV calculation" VerticalAlignment="Top"/>
 			<TextBlock Visibility="{Binding IsNpv, ConverterParameter=Not, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-50,0" TextWrapping="Wrap" Text="Uses excel-like XNPV calculation" VerticalAlignment="Top"/>
-			<CheckBox x:Name="PreserveValues" Content="Preserve Values" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" />
-			<CheckBox x:Name="LoadKnownValues" Content="Known Values" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top"/>	
+			<CheckBox x:Name="PreserveValues" Content="Preserve Values" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" ToolTipService.ToolTip="When checked the data values will not be refreshed when Load Sample Data is clicked or the Rollover Type is changed" />
+			<CheckBox x:Name="LoadKnownValues" Content="Known Values" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" ToolTipService.ToolTip="When checked, the same known values are always displayed after clicking Load Sample Data"/>	
 		</StackPanel>
-		
-		
-		<sdk:DataGrid x:Name="NpvList" ItemsSource="{Binding NpvList}" HorizontalAlignment="Left" Margin="12,8,0,-105" VerticalAlignment="Top" Grid.RowSpan="10" Grid.Column="4" Grid.ColumnSpan="4"/>
-		
-		
+							
 	</Grid>
 </UserControl>

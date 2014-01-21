@@ -42,7 +42,11 @@
     <Compile Include="DateRollCalculator.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Guard.cs" />
+    <Compile Include="Npv.cs" />
     <Compile Include="NpvCalculator.cs" />
+    <Compile Include="Cashflow.cs" />
+    <Compile Include="NpvRequest.cs" />
+    <Compile Include="NpvResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

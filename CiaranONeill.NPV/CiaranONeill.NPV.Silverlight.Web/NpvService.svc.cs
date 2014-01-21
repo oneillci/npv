@@ -30,9 +30,15 @@ namespace CiaranONeill.NPV.Silverlight.Web
         }
 
         [OperationContract]
-        public double CalculateNpv(IList<NpvData> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
+        public double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
         {
             return _npvCalculator.CalculateNpv(npvData, rate, rolloverType, useXnpvFormula);
         }
-    }    
+
+        [OperationContract]
+        public double CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
+        {
+            return _npvCalculator.CalculateNpvForNpvRequest(request, useXnpvFormula);
+        }
+    }        
 }
