@@ -7,7 +7,7 @@
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:Controls="clr-namespace:Microsoft.Internal.Pivot.Controls;assembly=System.Windows.Controls.Pivot" xmlns:Infrastructure="clr-namespace:CiaranONeill.NPV.Silverlight.Infrastructure" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Class="CiaranONeill.NPV.Silverlight.Views.MainView"
     mc:Ignorable="d"
-    Height="857" Width="1070">
+    Height="Auto" Width="Auto">
 
     <UserControl.Resources>
         
@@ -29,64 +29,72 @@
         </DataTemplate>
     </UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot" Background="White">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="180"/>
-			<ColumnDefinition Width="150"/>
-			<ColumnDefinition Width="180"/>
-			<ColumnDefinition Width="200"/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
+	<ScrollViewer>
 
-		</Grid.RowDefinitions>
-		<TextBox x:Name="InitialInvestment" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0,15,0,0" />
-		<TextBox x:Name="LowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0" Grid.Row="1" />
-		<TextBox x:Name="UpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
-		<TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" cal:Message.Attach="[Event TextChanged] = [IncrementChanged($text)]"/>
-		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Initial Investment" VerticalAlignment="Top" Height="16" Margin="10,20,0,0"/>
-		<TextBlock HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" Text="Lower Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0"/>
-		<TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Upper Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
-		<TextBlock HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
-		<TextBlock HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="Selected Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
-		<ComboBox x:Name="SelectedRate" SelectedItem="{Binding SelectedRate, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="150" Height="20" ItemsSource="{Binding Rates}"/>
-        
-		<sdk:DataGrid x:Name="NpvList" ItemsSource="{Binding NpvList}" HorizontalAlignment="Left" Margin="12,8,0,-105" VerticalAlignment="Top" Grid.RowSpan="10" Grid.Column="4" Grid.ColumnSpan="4"/>
-        
-		<TextBlock Grid.Row="5" Text="Selected Rollover Type" Margin="10,10,0,0"/>
-		<ComboBox SelectedItem="{Binding SelectedRoll, Mode=TwoWay}" ItemsSource="{Binding Rolls}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" Grid.Row="5" Width="150" HorizontalAlignment="Left" cal:Message.Attach="[Event SelectionChanged] = [SelectedRolloverChanged]" />
+		<Grid x:Name="LayoutRoot" Background="White">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="180"/>
+				<ColumnDefinition Width="150"/>
+				<ColumnDefinition Width="180"/>
+				<ColumnDefinition Width="200"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 
-		<Button x:Name="LoadSampleData" Grid.Row="6" Margin="10,25,0,0" Width="145" HorizontalAlignment="Left" Height="40" VerticalAlignment="Bottom">
-			<StackPanel Orientation="Horizontal">
-				<Image Width="16" Height="16" HorizontalAlignment="Left" x:Name="imageTest" Stretch="Fill" VerticalAlignment="Top" Source="arrow_rotate_clockwise.png" Margin="0,2,0,0" />
-				<TextBlock Text="Load Sample Data" Margin="3,0,0,0"/>
+			</Grid.RowDefinitions>
+			<TextBox x:Name="InitialInvestment" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0,10,0,0" />
+			<TextBox x:Name="LowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0" Grid.Row="1" />
+			<TextBox x:Name="UpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
+			<TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" cal:Message.Attach="[Event TextChanged] = [IncrementChanged($text)]"/>
+			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Initial Investment" VerticalAlignment="Top" Height="16" Margin="10,20,0,0"/>
+			<TextBlock HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" Text="Lower Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0"/>
+			<TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Upper Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
+			<TextBlock HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
+			<TextBlock HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="Selected Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
+			<ComboBox x:Name="SelectedRate" SelectedItem="{Binding SelectedRate, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="150" Height="20" ItemsSource="{Binding Rates}"/>
+
+            <sdk:DataGrid x:Name="NpvList" ItemsSource="{Binding NpvList}" Visibility="{Binding HasNpvValues, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="12,8,0,-105" VerticalAlignment="Top" Grid.RowSpan="11" Grid.Column="4" Grid.ColumnSpan="4" AutoGenerateColumns="False">
+                <sdk:DataGrid.Columns>
+                    <sdk:DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="50"/>
+                    <sdk:DataGridTextColumn Header="NPV" Binding="{Binding Value, StringFormat=\{0:F4\}}" Width="75"/>
+                </sdk:DataGrid.Columns>
+            </sdk:DataGrid>
+        
+			<TextBlock Grid.Row="5" Text="Selected Rollover Type" Margin="10,10,0,0"/>
+			<ComboBox SelectedItem="{Binding SelectedRoll, Mode=TwoWay}" ItemsSource="{Binding Rolls}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" Grid.Row="5" Width="150" HorizontalAlignment="Left" cal:Message.Attach="[Event SelectionChanged] = [SelectedRolloverChanged]" />
+
+			<Button x:Name="LoadSampleData" Grid.Row="6" Margin="10,25,0,0" Width="145" HorizontalAlignment="Left" Height="40" VerticalAlignment="Bottom">
+				<StackPanel Orientation="Horizontal">
+					<Image Width="16" Height="16" HorizontalAlignment="Left" x:Name="imageTest" Stretch="Fill" VerticalAlignment="Top" Source="arrow_rotate_clockwise.png" Margin="0,2,0,0" />
+					<TextBlock Text="Load Sample Data" Margin="3,0,0,0"/>
+				</StackPanel>
+			</Button>
+			<ItemsControl x:Name="Cashflows" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top" ItemTemplate="{StaticResource CashflowInputTemplate}" Grid.ColumnSpan="2" MinHeight="30"/>
+			<TextBlock HorizontalAlignment="Left" Grid.Row="8" TextWrapping="Wrap" Text="NPV" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
+			<TextBlock x:Name="NetPresentValue" Text="{Binding NetPresentValue, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" />
+			<Button x:Name="CalculateNpv" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="123" Margin="8,0,0,0">
+				<StackPanel Orientation="Horizontal">
+					<Image Width="16" Height="16" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Source="calculator.png" Margin="0,2,0,0" />
+					<TextBlock Text="Calculate NPV" Margin="3,0,0,0"/>
+				</StackPanel>
+			</Button>
+
+			<StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="6" >
+				<TextBlock Visibility="{Binding IsNpv, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-42,0" TextWrapping="Wrap" Text="Uses excel-like NPV calculation" VerticalAlignment="Top"/>
+				<TextBlock Visibility="{Binding IsNpv, ConverterParameter=Not, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-50,0" TextWrapping="Wrap" Text="Uses excel-like XNPV calculation" VerticalAlignment="Top"/>
+				<CheckBox x:Name="PreserveValues" Content="Preserve Values" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" ToolTipService.ToolTip="When checked the data values will not be refreshed when Load Sample Data is clicked or the Rollover Type is changed" />
+				<CheckBox x:Name="LoadKnownValues" Content="Known Values" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" ToolTipService.ToolTip="When checked, the same known values are always displayed after clicking Load Sample Data"/>	
 			</StackPanel>
-		</Button>
-		<ItemsControl x:Name="Cashflows" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top" ItemTemplate="{StaticResource CashflowInputTemplate}" Grid.ColumnSpan="2" MinHeight="30"/>
-		<TextBlock HorizontalAlignment="Left" Grid.Row="8" TextWrapping="Wrap" Text="NPV" VerticalAlignment="Top" Height="16" Margin="10,0,0,0" />
-		<TextBlock x:Name="NetPresentValue" Text="{Binding NetPresentValue, StringFormat=\{0:F4\}}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="8" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" />
-        <Button x:Name="CalculateNpv" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="123" Margin="8,0,0,0">
-            <StackPanel Orientation="Horizontal">
-                <Image Width="16" Height="16" HorizontalAlignment="Left" Stretch="Fill" VerticalAlignment="Top" Source="calculator.png" Margin="0,2,0,0" />
-                <TextBlock Text="Calculate NPV" Margin="3,0,0,0"/>
-            </StackPanel>
-        </Button>
-
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="6" >
-			<TextBlock Visibility="{Binding IsNpv, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-42,0" TextWrapping="Wrap" Text="Uses excel-like NPV calculation" VerticalAlignment="Top"/>
-			<TextBlock Visibility="{Binding IsNpv, ConverterParameter=Not, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-50,0" TextWrapping="Wrap" Text="Uses excel-like XNPV calculation" VerticalAlignment="Top"/>
-			<CheckBox x:Name="PreserveValues" Content="Preserve Values" HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top" ToolTipService.ToolTip="When checked the data values will not be refreshed when Load Sample Data is clicked or the Rollover Type is changed" />
-			<CheckBox x:Name="LoadKnownValues" Content="Known Values" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" ToolTipService.ToolTip="When checked, the same known values are always displayed after clicking Load Sample Data"/>	
-		</StackPanel>
 							
-	</Grid>
+		</Grid>
+	</ScrollViewer>
 </UserControl>

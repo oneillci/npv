@@ -55,9 +55,10 @@ namespace CiaranONeill.NPV.Tests
                 new Cashflow() { Period = new DateTime(2025, 1, 1), Amount = 10 },                
             };
 
-            var actual = sut.CalculateNpv(inputs, 10, RolloverType.Annual, false);
+            var initialInvestment = 100;
+            var actual = sut.CalculateNpv(initialInvestment, inputs, 10, RolloverType.Annual, false);
 
-            Assert.Equal(157.55, actual, 2);
+            Assert.Equal(157.55 - initialInvestment, actual, 2);
         }
 
         [Fact]
@@ -80,9 +81,10 @@ namespace CiaranONeill.NPV.Tests
                 new Cashflow() { Period = new DateTime(2014, 12, 1), Amount = 10 },                
             };
 
-            var actual = sut.CalculateNpv(inputs, 10, RolloverType.Month, true);
+            var initialInvestment = 100;
+            var actual = sut.CalculateNpv(initialInvestment, inputs, 10, RolloverType.Month, true);
 
-            Assert.Equal(250.51, actual, 2);
+            Assert.Equal(250.51 - initialInvestment, actual, 2);
         }
 
         [Fact]
@@ -105,9 +107,10 @@ namespace CiaranONeill.NPV.Tests
                 new Cashflow() { Period = new DateTime(2016, 10, 1), Amount = 10 },                
             };
 
-            var actual = sut.CalculateNpv(inputs, 10, RolloverType.Month, true);
+            var initialInvestment = 100;
+            var actual = sut.CalculateNpv(initialInvestment, inputs, 10, RolloverType.Month, true);
 
-            Assert.Equal(232.93, actual, 2);
+            Assert.Equal(232.93 - initialInvestment, actual, 2);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace CiaranONeill.NPV.Calculator
 {
     public interface INpvCalculator
     {
-        double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
+        double CalculateNpv(double initialInvestment, IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula);
         double CalculatePresentValue(double cashflow, double rate, double exponent , RolloverType rolloverType = RolloverType.Annual);
         NpvResponse CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula);
         IEnumerable<double> GetRandomData(bool loadKnownValues);
@@ -25,7 +25,7 @@ namespace CiaranONeill.NPV.Calculator
         /// <param name="rolloverType"></param>
         /// <param name="useXnpvFormula">When true the return value is calculated based on the Excel XNPV formula, when false simply uses the standard NPV formula</param>
         /// <returns></returns>
-        public double CalculateNpv(IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
+        public double CalculateNpv(double initialInvestment, IList<Cashflow> npvData, double rate, RolloverType rolloverType, bool useXnpvFormula)
         {
             Guard.IsInRange(rate, "rate", 0, 100);
 
@@ -47,7 +47,7 @@ namespace CiaranONeill.NPV.Calculator
                     npv += CalculatePresentValue(npvData[i].Amount, rate / 100, power, rolloverType);
                 }
             }
-            return npv;
+            return npv - initialInvestment;
         }
 
         public NpvResponse CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
@@ -56,7 +56,7 @@ namespace CiaranONeill.NPV.Calculator
 
             for (double rate = request.LowerRate; rate <= request.UpperRate; rate+= request.Increment)
             {
-                var npv = CalculateNpv(request.Cashflows, rate, request.RollType, useXnpvFormula);
+                var npv = CalculateNpv(request.InitialInvestment, request.Cashflows, rate, request.RollType, useXnpvFormula);
                 response.NetPresentValues.Add(new Npv{ Rate = rate, Value = npv});
             }
 

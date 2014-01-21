@@ -38,6 +38,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         public ObservableCollection<Npv> NpvList { get; set; }
         public bool PreserveValues { get; set; }
         public bool LoadKnownValues { get; set; }
+        public bool HasNpvValues { get; set; }
 
         /// <summary>
         /// Ctor
@@ -50,6 +51,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             _npvService = npvService;
 
             Cashflows = new ObservableCollection<Cashflow>();
+            NpvList = new ObservableCollection<Npv>();
             InitialInvestment = 1000;
             LowerRate = 1;
             UpperRate = 15;
@@ -94,20 +96,16 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 RollType = roll
             };
                 
-
-            //NetPresentValue = await _npvService.CalculateNpv(Cashflows, SelectedRate.Value, roll, !IsNpv);
-            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, false);
-            
+            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, false);            
             NetPresentValue = values.NetPresentValues.First(x => x.Rate == SelectedRate.Value).Value;
 
             NpvList.Clear();
+            HasNpvValues = true;
+
             values.NetPresentValues.ToObservable()
                 .Zip(Observable.Interval(TimeSpan.FromMilliseconds(15)), (npvData, time) => npvData)
                 .ObserveOnDispatcher()
-                .Subscribe(x => NpvList.Add(new Npv{ Rate = x.Rate, Value = x.Value}));
-
-            //NpvList = Cashflows.Select(x => x.Amount).ToObservableCollection();
-
+                .Subscribe(x => NpvList.Add(new Npv { Rate = x.Rate, Value = x.Value }));
         }
 
         /// <summary>
