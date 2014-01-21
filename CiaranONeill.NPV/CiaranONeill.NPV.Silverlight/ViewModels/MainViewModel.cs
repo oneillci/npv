@@ -18,6 +18,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         private readonly INpvService _npvService;
         private readonly INpvDateService _dateService;
 
+
         public ObservableCollection<Cashflow> Cashflows { get; set; }
         public double InitialInvestment { get; set; }
         public double LowerRate { get; set; }
@@ -36,9 +37,9 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             }
         }
         public ObservableCollection<Npv> NpvList { get; set; }
-        public bool PreserveValues { get; set; }
         public bool LoadKnownValues { get; set; }
         public bool HasNpvValues { get; set; }
+        public bool PreserveValues { get; set; }
 
         /// <summary>
         /// Ctor
@@ -150,6 +151,14 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 currentIncrement += newIncrement;
             }
             SelectedRate = Rates[0];
+        }
+
+        public bool CanLoadSampleData
+        {
+            get
+            {
+                return !PreserveValues;
+            }
         }
 
         /// <summary>
