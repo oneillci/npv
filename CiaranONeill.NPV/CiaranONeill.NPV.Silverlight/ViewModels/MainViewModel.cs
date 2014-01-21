@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Windows;
 using CiaranONeill.NPV.Silverlight.Extensions;
 using CiaranONeill.NPV.Silverlight.NpvServiceReference;
@@ -149,7 +150,13 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
 
             Cashflows = list.ToObservableCollection();
             NetPresentValue = 0;
-            NpvList = Cashflows.Select(x => x.Cashflow).ToObservableCollection();
+
+            Cashflows.ToObservable()
+                .Zip(Observable.Interval(TimeSpan.FromMilliseconds(15)), (npvData, time) => npvData)
+                .ObserveOnDispatcher()
+                .Subscribe(x => NpvList.Add(x.Cashflow));
+
+            //NpvList = Cashflows.Select(x => x.Cashflow).ToObservableCollection();
         }
     }
 
