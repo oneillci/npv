@@ -18,7 +18,6 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         private readonly INpvService _npvService;
         private readonly INpvDateService _dateService;
 
-
         public ObservableCollection<Cashflow> Cashflows { get; set; }
         public double InitialInvestment { get; set; }
         public double LowerRate { get; set; }
@@ -26,16 +25,13 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         public double Increment { get; set; }
         public Rate SelectedRate { get; set; }
         public ObservableCollection<Rate> Rates { get; set; }
-        public double NetPresentValue { get; set; }
         public Roll SelectedRoll { get; set; }
         public ObservableCollection<Roll> Rolls { get; set; }
         public bool IsNpv
         {
-            get
-            {
-                return SelectedRoll.Value.ToLower() == "annual";
-            }
+            get { return SelectedRoll.Value.ToLower() == "annual"; }
         }
+
         public ObservableCollection<Npv> NpvList { get; set; }
         public bool LoadKnownValues { get; set; }
         public bool HasNpvValues { get; set; }
@@ -97,12 +93,12 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 RollType = roll
             };
                 
-            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, false);            
-            NetPresentValue = values.NetPresentValues.First(x => x.Rate == SelectedRate.Value).Value;
+            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, true);            
 
             NpvList.Clear();
             HasNpvValues = true;
 
+            // Display values 'progressively'...
             values.NetPresentValues.ToObservable()
                 .Zip(Observable.Interval(TimeSpan.FromMilliseconds(15)), (npvData, time) => npvData)
                 .ObserveOnDispatcher()
@@ -121,8 +117,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             if (Increment > UpperRate)
                 yield return "Increment must be less than lower rate";
             if (SelectedRate == null)
-                yield return "You must choose a Selected Rate";
-            
+                yield return "You must choose a Selected Rate";            
         }
 
         /// <summary>
@@ -181,7 +176,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
             }
 
             Cashflows = list.ToObservableCollection();
-            NetPresentValue = 0;            
+            NpvList.Clear();
+            HasNpvValues = false;
         }
     }
 
