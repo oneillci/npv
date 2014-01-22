@@ -40,8 +40,8 @@
 				<ColumnDefinition Width="500"/>
 			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
-				<RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 
             <Grid>
@@ -63,7 +63,7 @@
                     <RowDefinition Height="Auto"/>
 
                 </Grid.RowDefinitions>
-                <TextBox x:Name="InitialInvestment" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0,10,0,0" />
+                <TextBox x:Name="InitialInvestment" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0,10,0,0" ToolTipService.ToolTip="The initial outlay as a positive number" />
                 <TextBox x:Name="LowerRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" Margin="0" Grid.Row="1" VerticalContentAlignment="Top" />
                 <TextBox x:Name="UpperRate" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2"/>
                 <TextBox x:Name="Increment" Grid.Column="1" HorizontalAlignment="Left" Height="23" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" behaviours:TextBoxFilterService.Filter="PositiveDecimal" behaviours:TextBoxFilterService.DecimalPlaces="2" cal:Message.Attach="[Event TextChanged] = [IncrementChanged($text)]"/>
@@ -71,8 +71,8 @@
                 <TextBlock HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" Text="Lower Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0"/>
                 <TextBlock HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" Text="Upper Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
                 <TextBlock HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" Text="Increment" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
-                <TextBlock HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="Selected Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
-                <ComboBox x:Name="SelectedRate" SelectedItem="{Binding SelectedRate, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="160" Height="20" ItemsSource="{Binding Rates}"/>
+                <!--<TextBlock HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" Text="Selected Rate" VerticalAlignment="Top" Height="16" Margin="10,10,0,0" />
+                <ComboBox x:Name="SelectedRate" SelectedItem="{Binding SelectedRate, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="160" Height="20" ItemsSource="{Binding Rates}"/>-->
 
                 <TextBlock Grid.Row="5" Text="Selected Rollover Type" Margin="10,10,5,0"/>
                 <ComboBox SelectedItem="{Binding SelectedRoll, Mode=TwoWay}" ItemsSource="{Binding Rolls}" SelectedValuePath="Value" DisplayMemberPath="Value" Grid.Column="1" Grid.Row="5" Width="160" HorizontalAlignment="Left" cal:Message.Attach="[Event SelectionChanged] = [SelectedRolloverChanged]" />
@@ -83,12 +83,13 @@
                     </StackPanel>
                 </Button>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top">
-                    <TextBlock Visibility="{Binding IsNpv, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-82,0" TextWrapping="Wrap" Text="Excel-like NPV calculation" VerticalAlignment="Top"/>
-                    <TextBlock Visibility="{Binding IsNpv, ConverterParameter=Not, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-90,0" TextWrapping="Wrap" Text="Excel-like XNPV calculation" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="UseXnpv" Content="Use XNPV formula" ToolTipService.ToolTip="When checked an Excel-like XNPV formula is applied"/>
+                    <!--<TextBlock Visibility="{Binding IsNpv, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-82,0" TextWrapping="Wrap" Text="Excel-like NPV calculation" VerticalAlignment="Top"/>
+                    <TextBlock Visibility="{Binding IsNpv, ConverterParameter=Not, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="0,0,-90,0" TextWrapping="Wrap" Text="Excel-like XNPV calculation" VerticalAlignment="Top"/>-->
                 </StackPanel>                
             </Grid>
             
-            <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -97,7 +98,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <sdk:DataGrid x:Name="NpvList" ItemsSource="{Binding NpvList}" Visibility="{Binding HasNpvValues, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" AutoGenerateColumns="False">
+                <sdk:DataGrid x:Name="NpvList" ItemsSource="{Binding NpvList}" Visibility="{Binding HasNpvValues, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" VerticalContentAlignment="Top">
                     <sdk:DataGrid.Columns>
                     	<sdk:DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="80"/>
                     	<sdk:DataGridTextColumn Header="NPV" Binding="{Binding Value, StringFormat=\{0:F4\}}" Width="90"/>
@@ -107,7 +108,7 @@
                 <toolkit:Chart 
                     Margin="12,10,0,0" Visibility="{Binding HasNpvValues, Converter={StaticResource BoolToVisibilityConverter}}"
                     Grid.Column="2"
-                    MinHeight="300" MinWidth="700" VerticalAlignment="Top" Height="350">
+                    MinHeight="300" MinWidth="700" VerticalAlignment="Top" Height="350" VerticalContentAlignment="Top">
                     <toolkit:Chart.Series>
                         <toolkit:LineSeries Title="NPV" ItemsSource="{Binding NpvList}" IndependentValueBinding="{Binding Rate}" DependentValueBinding="{Binding Value}" />
                     </toolkit:Chart.Series>

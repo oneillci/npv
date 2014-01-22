@@ -23,7 +23,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         public double LowerRate { get; set; }
         public double UpperRate { get; set; }
         public double Increment { get; set; }
-        public Rate SelectedRate { get; set; }
+        //public Rate SelectedRate { get; set; }
         public ObservableCollection<Rate> Rates { get; set; }
         public Roll SelectedRoll { get; set; }
         public ObservableCollection<Roll> Rolls { get; set; }
@@ -31,7 +31,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
         {
             get { return SelectedRoll.Value.ToLower() == "annual"; }
         }
-
+        public bool UseXnpv { get; set; }
         public ObservableCollection<Npv> NpvList { get; set; }
         public bool LoadKnownValues { get; set; }
         public bool HasNpvValues { get; set; }
@@ -49,7 +49,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
 
             Cashflows = new ObservableCollection<Cashflow>();
             NpvList = new ObservableCollection<Npv>();
-            InitialInvestment = 1000;
+            InitialInvestment = 100;
             LowerRate = 1;
             UpperRate = 15;
             Increment = 1.0;
@@ -93,7 +93,7 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 RollType = roll
             };
                 
-            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, true);            
+            var values = await _npvService.CalculateNpvForNpvRequest(npvRequest, UseXnpv);            
 
             NpvList.Clear();
             HasNpvValues = true;
@@ -116,8 +116,8 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 yield return "Lower rate must be less than upper rate";
             if (Increment > UpperRate)
                 yield return "Increment must be less than lower rate";
-            if (SelectedRate == null)
-                yield return "You must choose a Selected Rate";            
+            //if (SelectedRate == null)
+            //    yield return "You must choose a Selected Rate";            
         }
 
         /// <summary>
@@ -145,15 +145,12 @@ namespace CiaranONeill.NPV.Silverlight.ViewModels
                 Rates.Add(new Rate { Value = currentIncrement });
                 currentIncrement += newIncrement;
             }
-            SelectedRate = Rates[0];
+            //SelectedRate = Rates[0];
         }
 
         public bool CanLoadSampleData
         {
-            get
-            {
-                return !PreserveValues;
-            }
+            get { return !PreserveValues; }
         }
 
         /// <summary>

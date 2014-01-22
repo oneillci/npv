@@ -30,26 +30,46 @@ namespace CiaranONeill.NPV.Calculator
             Guard.IsInRange(rate, "rate", 0, 100);
 
             double npv = 0;
-            if (!useXnpvFormula)
-            {
-                for (int i = 0; i < npvData.Count(); i++)
-                {
-                    npv += CalculatePresentValue(npvData[i].Amount, rate / 100, i + 1, rolloverType);
-                }
-            }
-            else
+            if (useXnpvFormula)
             {
                 var firstDate = npvData.First().Period;
                 for (int i = 0; i < npvData.Count(); i++)
                 {
-                    double power;
-                    power = i == 0 ? 0 : GetNpvExponent(firstDate, npvData[i].Period);
-                    npv += CalculatePresentValue(npvData[i].Amount, rate / 100, power, rolloverType);
+                    double exponent;
+                    exponent = i == 0 ? 0 : GetNpvExponent(firstDate, npvData[i].Period);
+                    npv += CalculatePresentValue(npvData[i].Amount, rate / 100, exponent, rolloverType);
                 }
             }
+            else
+            {
+                // Change the rate if it's monthly or quarterly. http://www.vertex42.com/ExcelArticles/discount-factors.html
+                switch (rolloverType)
+                {
+                    case RolloverType.Month:
+                        rate = rate / 12;
+                        break;
+                    case RolloverType.Quarter:
+                        rate = rate / 4;
+                        break;
+                    default:
+                        break;
+                }
+
+                for (int i = 0; i < npvData.Count(); i++)
+                {
+                    npv += CalculatePresentValue(npvData[i].Amount, rate / 100, i + 1, rolloverType);
+                }                
+            }
+            // Subtract initial investment. Example 2: http://office.microsoft.com/en-au/excel-help/npv-HP005209199.aspx
             return npv - initialInvestment;
         }
 
+        /// <summary>
+        /// Calculates the NPV for a series of cashflows
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="useXnpvFormula"></param>
+        /// <returns></returns>
         public NpvResponse CalculateNpvForNpvRequest(NpvRequest request, bool useXnpvFormula)
         {
             var response = new NpvResponse();
@@ -63,7 +83,9 @@ namespace CiaranONeill.NPV.Calculator
             return response;
         }
   
-
+        /// <summary>
+        /// Calculate the Present value of a cashflow
+        /// </summary>
         public double CalculatePresentValue(double cashflow, double rate, double exponent, RolloverType rolloverType = RolloverType.Annual)
         {
             Guard.IsInRange(rate, "rate", 0, 100);

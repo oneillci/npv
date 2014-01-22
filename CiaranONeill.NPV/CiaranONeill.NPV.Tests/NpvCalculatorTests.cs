@@ -36,7 +36,7 @@ namespace CiaranONeill.NPV.Tests
         }
 
         [Fact] 
-        public void CalculateNpv_ForKnownAnnualValues_ReturnsExpected()
+        public void CalculateXNpv_ForKnownAnnualValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
             var inputs = new List<Cashflow>()
@@ -62,7 +62,7 @@ namespace CiaranONeill.NPV.Tests
         }
 
         [Fact]
-        public void CalculateNpv_ForKnownMonthValues_ReturnsExpected()
+        public void CalculateXNpv_ForKnownMonthValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
             var inputs = new List<Cashflow>()
@@ -88,7 +88,7 @@ namespace CiaranONeill.NPV.Tests
         }
 
         [Fact]
-        public void CalculateNpv_ForKnownQuarterValues_ReturnsExpected()
+        public void CalculateXNpv_ForKnownQuarterValues_ReturnsExpected()
         {
             var sut = new NpvCalculator();
             var inputs = new List<Cashflow>()
